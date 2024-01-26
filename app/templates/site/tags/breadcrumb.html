@@ -1,0 +1,17 @@
+{% if page.0 == 'home' %}
+    <h1 class="mb-4" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">Unisex Salon</h1>
+            <!--<p class="mb-5" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">Created by <a href="#">Colorlib.com</a></p>-->
+
+            <p data-scrollax="properties: { translateY: '30%', opacity: 1.6 }"><a href="#ftco-navbar" class="btn btn-white btn-outline-white px-4 py-3">View more</a></p>
+{% else %}
+    {% if page|length == 2 %}
+     <h1 class="mb-3 mt-5 bread" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">{{ page.1 }}</h1>
+    {% else  %}
+        <h1 class="mb-3 mt-5 bread" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">{{ page.1 }} {{ page.2 }}</h1>
+    {% endif %}
+    {% if page|length == 2 %}
+    <p class="breadcrumbs" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }"><span class="mr-2"><a href="/">Home</a></span> <span>{{ page.1}}</span></p>
+    {% else  %}
+        <p class="breadcrumbs" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }"><span class="mr-2"><a href="/">Home</a></span> <span><a href="/{{ page.1 }}.html">{{ page.1}}</a></span>&nbsp;<span>{{ page.2}}</span></p>
+    {% endif %}
+{% endif %}

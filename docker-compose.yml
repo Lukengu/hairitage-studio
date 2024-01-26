@@ -1,0 +1,39 @@
+version: '3.8'
+services:
+  web:
+    build:
+      context: ./app
+      dockerfile: Dockerfile
+    command: gunicorn hairitage.wsgi:application --bind 0.0.0.0:8000
+    volumes:
+      - ./app:/home/app/web
+    ports:
+      - "8000:8000"
+    env_file:
+      - ./.env
+    depends_on:
+      - db
+    expose:
+      - 8000
+  db:
+    image: postgres:15
+    volumes:
+        - ./_data:/var/lib/postgresql/data/
+    env_file:
+      - .env.db
+  adminer:
+    image: adminer
+    restart: always
+    depends_on:
+      - db
+    ports:
+      - "7080:8080"
+  nginx:
+    build: ./nginx
+    ports:
+      - "1337:80"
+    depends_on:
+      - web
+    volumes:
+      - ./app:/home/app/web
+

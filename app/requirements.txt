@@ -1,0 +1,7 @@
+django
+psycopg2-binary
+django-jazzmin
+gunicorn
+django-seed
+Pillow
+django-tinymce

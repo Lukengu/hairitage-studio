@@ -1,0 +1,23 @@
+{% extends 'site/layout.html' %}
+ {% load teams %}
+{% block site-title %}
+    Hairitage Studio - About Us
+{% endblock site-title %}
+{% block content %}
+        <section class="ftco-section">
+    	<div class="container">
+    		<div class="row d-flex">
+    			<div class="col-md-6 d-flex ftco-animate">
+    				<div class="img img-about align-self-stretch" style="background-image: url(media/{{ content.image }}); width: 100%;"></div>
+    			</div>
+    			<div class="col-md-6 pl-md-5 ftco-animate">
+    				<h2 class="mb-4">{{ content.title }}</h2>
+                    {% autoescape off  %}
+    			    {{ content.content }}
+                    {% endautoescape %}
+    			</div>
+    		</div>
+    	</div>
+    </section>
+    {% teams %}
+{% endblock %}

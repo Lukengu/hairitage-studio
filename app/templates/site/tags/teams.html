@@ -1,0 +1,26 @@
+   <section class="ftco-section bg-light">
+      <div class="container">
+      	<div class="row justify-content-center mb-5 pb-3">
+          <div class="col-md-7 heading-section ftco-animate text-center">
+            <h2 class="mb-4">Meet Our Talented Teams</h2>
+            <p>At Hairitage studio, we take pride in our exceptional teams, each comprised of skilled professionals dedicated to delivering unparalleled beauty and wellness experiences.</p>
+          </div>
+        </div>
+        <div class="row">
+            {% for team in teams %}
+                <div class="col-lg-3 d-flex mb-sm-4 ftco-animate">
+        		<div class="staff">
+      				<div class="img mb-4" style="background-image: url(/media/{{ team.photo }});"></div>
+      				<div class="info text-center">
+      					<h3><a href="teacher-single.html">{{ team.name }}</a></h3>
+      					<span class="position">{{ team.position }}</span>
+      					<div class="text">
+	        				<p>{{ team.intro }}</p>
+	        			</div>
+      				</div>
+        		</div>
+        	</div>
+            {% endfor %}
+        </div>
+      </div>
+    </section>

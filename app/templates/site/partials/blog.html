@@ -1,0 +1,60 @@
+ <section class="ftco-section">
+      <div class="container">
+        <div class="row justify-content-center mb-5 pb-3">
+          <div class="col-md-7 heading-section ftco-animate text-center">
+            <h2 class="mb-4">Recent from blog</h2>
+            <p>Our blog is a dedicated space where we share the latest trends, expert insights, and insider tips to inspire and empower you on your beauty journey.</p>
+          </div>
+        </div>
+        <div class="row d-flex">
+            {% for post in posts %}
+                  <div class="col-md-4 d-flex ftco-animate">
+          	        <div class="blog-entry align-self-stretch">
+              <a href="/blog/details.html?id={{ post.id }}" class="block-20" style="background-image: url('/media/{{ post.image }}');">
+              </a>
+              <div class="text py-4 d-block">
+              	<div class="meta">
+                  <div><a href="#">{{ post.date }}</a></div>
+                  <div><a href="#">{{ post.user_id }}</a></div>
+                  <div><a href="#" class="meta-chat">{% if post.comment_post > 0  %}<span class="icon-chat"></span>{{ post.comment_post }}</a>{% endif %}</div>
+                </div>
+                <h3 class="heading mt-2"><a href="blog/details.html?id={{ post.id }}">{{ post.title }}</a></h3>
+                {% autoescape off %}{{ post.intro }}{% endautoescape %}
+              </div>
+            </div>
+                </div>
+            {% endfor %}
+        </div>
+
+      {% if posts.paginator.num_pages > 1 %}
+          <div class="row mt-5">
+          <div class="col text-center">
+            <div class="block-27">
+              <ul>
+                  {% if posts.has_previous %}
+                      <li><a href="?page=1">&lt;</a></li>
+                  {% else %}
+                      <li><span>&lt;</span></li>
+                  {% endif %}
+
+                  {% for i in range %}
+                      {% if i == page %}
+                           <li class="active"><span>{{ i }}</span></li>
+                      {% else %}
+                          <li><a href="?page={{ i }}">{{ i }}</a></li>
+                      {% endif %}
+                  {% endfor %}
+
+
+                  {% if posts.has_next %}
+                      <li><a href="?page={{ posts.next_page_number}}">&gt;</a></li>
+                  {% else %}
+                       <li><span>&gt;</span></li>
+                  {% endif %}
+              </ul>
+            </div>
+          </div>
+          </div>
+      {% endif %}
+      </div>
+    </section>
