@@ -4,6 +4,7 @@ from django.contrib import messages
 from django import template
 from django.core.mail import EmailMessage, get_connection
 from django.conf import settings
+from django.db.models import Count
 
 import work
 import product
@@ -18,13 +19,16 @@ ITEM_PER_PAGE = 6
 def home_page(request):
     promotion = product.models.Promotion.objects.filter(home_page=True).order_by('-created_at').first()
     posts = blog.models.Post.objects.filter(type='blog').filter(status='PUBLISH').order_by('-date')[:3:1]
+    work_categories = work.models.Category.objects.filter(parent_id__isnull=True).order_by('name')
 
     context = {
         'services': work.models.Service.objects.all().order_by('name'),
         'promotion': promotion,
         'posts': posts,
-        'stats': configuration.models.Stats.objects.all()
+        'stats': configuration.models.Stats.objects.all(),
+        'work_categories': work_categories
     }
+
     return render(request, "site/home.html", context)
 
 
@@ -47,6 +51,47 @@ def blog_page(request):
     return render(request, 'site/posts.html', context)
 
 
+def book_appointment(request):
+    if request.method == 'POST':
+        full_name = request.POST.get('full_name')
+        email = request.POST.get('email')
+        phone = request.POST.get('phone')
+        service = request.POST.get('service')
+        date = request.POST.get('date')
+        time = request.POST.get('time')
+        notes = request.POST.get('notes')
+
+        # Save the appointment to the database
+        appointment = work.models.Appointment(
+            full_name=full_name,
+            email=email,
+            phone=phone,
+            service=service,
+            date=date,
+            time=time,
+            notes=notes
+        )
+        appointment.save()
+
+        # Correctly format and save the message
+        message_text = (
+            f"Appointment for {full_name} ({email}) for {service} "
+            f"on {date} at {time}. "
+            f"Special notes: {notes}"
+        )
+
+        message = contact.models.Message(
+            full_name="Hairitage Studio",
+            email="info@hairitage-studio.co.za",
+            message_text=message_text
+        )
+        message.save()
+
+        messages.success(request, 'Your appointment has been successfully received. ')
+
+    return render(request, 'site/contact.html', {'services': work.models.Service.objects.all().order_by('name')})
+
+
 def contact_page(request):
     if request.method == 'POST':
         full_name = request.POST.get('full_name')
@@ -61,7 +106,9 @@ def contact_page(request):
         messages.success(request, 'Your message has been successfully received.')
         return redirect('contact.html')
 
-    return render(request, 'site/contact.html', {})
+    services = work.models.Service.objects.all().order_by('name')
+
+    return render(request, 'site/contact.html', {'services': services})
 
 
 def service_page(request):
@@ -86,3 +133,47 @@ def send_email_with(message):
         recipient_list = [message.email, ]
         message_text = message.message_text
         EmailMessage(subject, message_text, email_from, recipient_list, connection=connection).send()
+
+
+def work_page(request):
+    cat_id = request.GET.get('cat_id')
+    if cat_id is None:
+        items = work.models.Item.objects.all().order_by('-created_at')
+    else:
+        items = work.models.Item.objects.filter(category_id=cat_id).order_by('-created_at')
+
+    paginator = Paginator(items, int(ITEM_PER_PAGE))
+    page = request.GET.get('page', 1)
+    works = paginator.get_page(page)
+
+    # Get main categories and prefetch their subcategories with item counts
+    work_categories = (
+        work.models.Category.objects
+        .filter(parent_id__isnull=True)
+        .prefetch_related('subcategories')
+        .order_by('name')
+    )
+
+    subcategories = work.models.Category.objects.raw(
+        """
+        SELECT
+            work_category.id,
+            work_category.name,
+            COUNT(work.*) as ct
+        FROM work_category
+        LEFT JOIN work
+            ON work_category.id = work.category_id
+        WHERE work_category.parent_id IS NOT NULL
+        GROUP BY work_category.id
+        ORDER BY work_category.name
+        """
+    )
+
+    context = {
+        'works': works,
+        'range': range(1, works.paginator.num_pages + 1),
+        'page': int(page),
+        'work_categories': work_categories,
+        'subcategories': subcategories,
+    }
+    return render(request, 'site/work.html', context)

@@ -8767,4 +8767,17 @@ textarea.form-control {
     stroke-dashoffset: -35px; }
   100% {
     stroke-dasharray: 89, 200;
-    stroke-dashoffset: -136px; } }
+    stroke-dashoffset: -136px; }
+    }
+
+.brand-logo {
+  height: 30px !important;
+  width: auto;
+}
+
+/* Responsive: smaller on mobile */
+@media (max-width: 576px) {
+  .brand-logo {
+    height: 20px; /* adjust for mobile */
+  }
+}

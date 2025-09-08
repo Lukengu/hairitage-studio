@@ -91,6 +91,8 @@ JAZZMIN_SETTINGS = {
         "auth.Group": "fas fa-users",
         "work.Service": "fas fa-list",
         "work.Team": "fas fa-users",
+        "work.Category": "fas fa-tags",  # categories of work (e.g., Haircuts, Coloring)
+        "work.Item": "fas fa-image",  # individual gallery/photo of work
         "product.Promotion": "fas fa-align-justify",
         "blog.Category": "fas fa-newspaper",
         "blog.Comment": "fas fa-comments",
@@ -99,6 +101,7 @@ JAZZMIN_SETTINGS = {
         "configuration.Stats": "fas fa-chart-pie",
         "contact.Message": "fas fa-comment-alt",
         "contact.Reply": "fas fa-reply",
+        "contact.Appointment": "fas fa-calendar-check",
 
     },
     # Icons that are used when one is not manually specified

@@ -27,3 +27,18 @@ class Reply(models.Model):
 
     class Meta:
         verbose_name_plural = "replies"
+
+
+class Appointment(models.Model):
+    id = models.AutoField(primary_key=True)
+    full_name = models.CharField(max_length=100)
+    email = models.CharField(max_length=100)
+    phone = models.CharField(max_length=15)
+    service = models.CharField(max_length=100)
+    date = models.DateField()
+    time = models.TimeField()
+    notes = models.TextField(blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f'Appointment for {self.full_name} on {self.date} at {self.time}'

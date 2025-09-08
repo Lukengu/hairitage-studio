@@ -16,7 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from .views import home_page, about_page, blog_page, contact_page, service_page
+from .views import home_page, about_page, blog_page, contact_page, service_page, work_page, book_appointment
 from django.contrib.staticfiles.urls import static, staticfiles_urlpatterns
 
 urlpatterns = [
@@ -27,6 +27,8 @@ urlpatterns = [
     path('blog/', include('blog.urls')),
     path('services.html', service_page, name="services"),
     path('contact.html', contact_page, name="contact"),
+    path('work.html', work_page, name="work"),
+    path('book_appointment/', book_appointment, name="book_appointment"),
     path('tinymce/', include('tinymce.urls')),
 ]
 

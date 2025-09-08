@@ -2,70 +2,67 @@
 # BUILDER #
 ###########
 
-# pull official base image
-FROM python:3.11.4-slim-buster as builder
+FROM python:3.11.4-slim-bookworm as builder
 
-# set work directory
 WORKDIR /usr/src/app
 
-# set environment variables
-ENV PYTHONDONTWRITEBYTECODE 1
-ENV PYTHONUNBUFFERED 1
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
 
-# install system dependencies
+# Install build dependencies
 RUN apt-get update && \
-    apt-get install -y --no-install-recommends gcc
+    apt-get install -y --no-install-recommends \
+        build-essential \
+        gcc \
+        libffi-dev \
+        libssl-dev \
+        python3-dev \
+        curl \
+    && rm -rf /var/lib/apt/lists/*
 
-# lint
-RUN pip install --upgrade pip
-RUN pip install flake8==6.0.0
+# Upgrade pip and install flake8 for linting
+RUN pip install --upgrade pip flake8==6.0.0
+
+# Copy project files for linting
 COPY . /usr/src/app/
 RUN flake8 --ignore=E501,F401,E241,W292,F811 .
 
-# install python dependencies
+# Copy requirements and build wheels
 COPY ./requirements.txt .
 RUN pip wheel --no-cache-dir --no-deps --wheel-dir /usr/src/app/wheels -r requirements.txt
-
 
 #########
 # FINAL #
 #########
 
-# pull official base image
-FROM python:3.11.4-slim-buster
+FROM python:3.11.4-slim-bookworm
 
-# create directory for the app user
-RUN mkdir -p /home/app
+WORKDIR /home/app/web
 
-# create the app user
-RUN addgroup --system app && adduser --system --group app
-
-# create the appropriate directories
 ENV HOME=/home/app
 ENV APP_HOME=/home/app/web
-RUN mkdir $APP_HOME
-WORKDIR $APP_HOME
 
-# install dependencies
-RUN apt-get update && apt-get install -y --no-install-recommends netcat
+# Create app user
+RUN addgroup --system app && adduser --system --group app
+
+# Install runtime dependencies
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends netcat-openbsd && \
+    rm -rf /var/lib/apt/lists/*
+
+# Copy wheels and install Python dependencies
 COPY --from=builder /usr/src/app/wheels /wheels
 COPY --from=builder /usr/src/app/requirements.txt .
-RUN pip install --upgrade pip
-RUN pip install --no-cache /wheels/*
+RUN pip install --upgrade pip && pip install --no-cache /wheels/*
 
-# copy entrypoint.prod.sh
-COPY ./entrypoint.sh .
-RUN sed -i 's/\r$//g'  $APP_HOME/entrypoint.sh
-RUN chmod +x  $APP_HOME/entrypoint.sh
-
-# copy project
+# Copy project
 COPY . $APP_HOME
 
-# chown all the files to the app user
+# Set permissions
 RUN chown -R app:app $APP_HOME
 
-# change to the app user
+# Switch to app user
 USER app
 
-# run entrypoint.sh
+# Entrypoint (replace with your script)
 ENTRYPOINT ["/home/app/web/entrypoint.sh"]
