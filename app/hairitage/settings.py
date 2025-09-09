@@ -113,12 +113,13 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'sandbox.smtp.mailtrap.io'
-EMAIL_HOST_USER = '274c4d50a19f8b'
-EMAIL_HOST_PASSWORD = '45619add56cad0'
-EMAIL_PORT = '2525'
-EMAIL_USE_TLS = False
+EMAIL_HOST = 'live.smtp.mailtrap.io'
+EMAIL_HOST_USER = 'api'
+EMAIL_HOST_PASSWORD = 'ba71f45eb1cbae7971dd42a49bc6905b'
+EMAIL_PORT = '587'
+EMAIL_USE_TLS = True
 EMAIL_USE_SSL = False
+DEFAULT_FROM_EMAIL = 'info@hairitage-studio.co.za'
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/

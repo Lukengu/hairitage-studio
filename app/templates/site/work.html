@@ -8,86 +8,89 @@ Hairitage Studio — Our Work
 
 {% block content %}
 <section class="ftco-section contact-section">
-    <div class="container mt-5">
-        <div class="row align-items-start"> <!-- align items top -->
-            <!-- Left panel with categories -->
-            <div class="col-md-3">
-                <div class="sidebar-box ftco-animate mt-0"> <!-- remove top margin -->
-                    <div class="categories">
-                        <h5>Categories</h5>
-                        <ul class="list-unstyled">
-                            {% for category in work_categories %}
-                            <li class="fw-bold py-2 border-bottom bg-light">{{ category.name }}</li>
-                            {% for sub in category.subcategories.all %}
-                            <li class="ps-3 py-1 {% if request.GET.cat_id|default:0 == sub.id %}bg-primary text-white rounded fw-bold{% endif %}">
-                                <a href="?cat_id={{ sub.id }}" class="text-decoration-none {% if request.GET.cat_id|default:0 == sub.id %}text-white{% else %}text-dark{% endif %}">
-                                    &raquo; {{ sub.name }}
-                                </a>
-                            </li>
-                            {% endfor %}
-                            {% endfor %}
-                        </ul>
-                    </div>
-                </div>
-            </div>
+	<div class="container mt-5">
+		<div class="row align-items-start"> <!-- align items top -->
+			<!-- Left panel with categories -->
+			<div class="col-md-3">
+				<div class="sidebar-box ftco-animate mt-0"> <!-- remove top margin -->
+					<div class="categories">
+						<h5>Categories</h5>
+						<ul class="list-unstyled">
+							{% for category in work_categories %}
+							<li class="fw-bold py-2 border-bottom bg-light">{{ category.name }}</li>
+							{% for sub in category.subcategories.all %}
+							<li class="ps-3 py-1 {% if request.GET.cat_id|default:0 == sub.id %}bg-primary text-white rounded fw-bold{% endif %}">
+								<a href="?cat_id={{ sub.id }}" class="text-decoration-none {% if request.GET.cat_id|default:0 == sub.id %}text-white{% else %}text-dark{% endif %}">
+									&raquo; {{ sub.name }}
+								</a>
+							</li>
+							{% endfor %}
+							{% endfor %}
+						</ul>
+					</div>
+				</div>
+			</div>
 
-            <!-- Gallery panel -->
-            <div class="col-md-9">
-                <div id="lightgallery" class="row">
-                    {% for work in works %}
-                    <div class="col-md-4 mb-4" data-src="{{ work.image.url }}" data-sub-html="<h4>{{ work.title }}</h4>">
-                        <a href="#">
-                            <div class="card shadow-sm h-100 border-0">
-                                <img src="{{ work.image.url }}"
-                                     class="card-img-top img-fluid"
-                                     alt="{{ work.title }}"
-                                     style="height: 250px; object-fit: cover; object-position: top; border-top-left-radius: .5rem; border-top-right-radius: .5rem;">
-                                <div class="card-body text-center">
-                                    <h6 class="card-title mb-0">{{ work.title }}</h6>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                    {% empty %}
-                    <p>No works found in this category.</p>
-                    {% endfor %}
-                </div>
+			<!-- Gallery panel -->
+			<div class="col-md-9">
+				<div id="lightgallery" class="row">
+					{% for work in works %}
+					<div class="col-md-4 mb-4" data-src="{{ work.image.url }}" data-sub-html="<h4>{{ work.title }}</h4>">
+						<a href="#">
+							<div class="card shadow-sm h-100 border-0">
+								<img src="{{ work.image.url }}"
+									 class="card-img-top img-fluid"
+									 alt="{{ work.title }}"
+									 style="height: 250px; object-fit: cover; object-position: top; border-top-left-radius: .5rem; border-top-right-radius: .5rem;">
+								<div class="card-body text-center">
+									<h6 class="card-title mb-0">{{ work.title }}</h6>
+								</div>
+							</div>
+						</a>
+					</div>
+					{% empty %}
+					<p>No works found in this category.</p>
+					{% endfor %}
+				</div>
 
-                <!-- Pagination -->
-                <nav aria-label="Page navigation">
-                    <ul class="pagination justify-content-center">
-                        {% if works.has_previous %}
-                        <li class="page-item">
-                            <a class="page-link"
-                               href="?page={{ works.previous_page_number }}{% if request.GET.cat_id %}&cat_id={{ request.GET.cat_id }}{% endif %}">
-                                Previous
-                            </a>
-                        </li>
-                        {% endif %}
 
-                        {% for num in range %}
-                        <li class="page-item {% if page == num %}active{% endif %}">
-                            <a class="page-link"
-                               href="?page={{ num }}{% if request.GET.cat_id %}&cat_id={{ request.GET.cat_id }}{% endif %}">
-                                {{ num }}
-                            </a>
-                        </li>
-                        {% endfor %}
+				<div class="row mt-5">
+					<div class="col text-center">
+						<div class="block-27">
+							<ul>
+								{% if works.has_previous %}
+								<li>
+									<a
+									   href="?page={{ works.previous_page_number }}{% if request.GET.cat_id %}&cat_id={{ request.GET.cat_id }}{% endif %}">
+										&lt;
+									</a>
+								</li>
+								{% endif %}
 
-                        {% if works.has_next %}
-                        <li class="page-item">
-                            <a class="page-link"
-                               href="?page={{ works.next_page_number }}{% if request.GET.cat_id %}&cat_id={{ request.GET.cat_id }}{% endif %}">
-                                Next
-                            </a>
-                        </li>
-                        {% endif %}
-                    </ul>
-                </nav>
-            </div>
+								{% for num in range %}
+								<li class="{% if page == num %}active{% endif %}">
+									<a class=""
+									   href="?page={{ num }}{% if request.GET.cat_id %}&cat_id={{ request.GET.cat_id }}{% endif %}">
+										{{ num }}
+									</a>
+								</li>
+								{% endfor %}
 
-        </div>
-    </div>
+								{% if works.has_next %}
+								<li class="">
+									<a class=""
+									   href="?page={{ works.next_page_number }}{% if request.GET.cat_id %}&cat_id={{ request.GET.cat_id }}{% endif %}">
+										&gt;
+									</a>
+								</li>
+								{% endif %}
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </section>
 
 <!-- LightGallery CSS & JS -->
@@ -97,13 +100,13 @@ Hairitage Studio — Our Work
 <script src="https://cdn.jsdelivr.net/npm/lightgallery/plugins/zoom/lg-zoom.min.js"></script>
 
 <script>
-document.addEventListener("DOMContentLoaded", function() {
-    lightGallery(document.getElementById('lightgallery'), {
-        plugins: [lgZoom, lgThumbnail],
-        speed: 500,
-        thumbnail: true,
-        download: false  // Disable download button
-    });
-});
+	document.addEventListener("DOMContentLoaded", function() {
+		lightGallery(document.getElementById('lightgallery'), {
+			plugins: [lgZoom, lgThumbnail],
+			speed: 500,
+			thumbnail: true,
+			download: false  // Disable download button
+		});
+	});
 </script>
 {% endblock %}

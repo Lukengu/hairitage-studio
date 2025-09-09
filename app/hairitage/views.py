@@ -5,6 +5,7 @@ from django import template
 from django.core.mail import EmailMessage, get_connection
 from django.conf import settings
 from django.db.models import Count
+from django.template.loader import render_to_string
 
 import work
 import product
@@ -57,12 +58,12 @@ def book_appointment(request):
         email = request.POST.get('email')
         phone = request.POST.get('phone')
         service = request.POST.get('service')
-        date = request.POST.get('date')
-        time = request.POST.get('time')
+        date = request.POST.get('appointment_date')
+        time = request.POST.get('appointment_time')
         notes = request.POST.get('notes')
 
-        # Save the appointment to the database
-        appointment = work.models.Appointment(
+        # Save the appointment
+        appointment = contact.models.Appointment(
             full_name=full_name,
             email=email,
             phone=phone,
@@ -73,23 +74,76 @@ def book_appointment(request):
         )
         appointment.save()
 
-        # Correctly format and save the message
+        # Build message for logs
         message_text = (
-            f"Appointment for {full_name} ({email}) for {service} "
-            f"on {date} at {time}. "
-            f"Special notes: {notes}"
+            f"Appointment for {full_name} ({email}, {phone})\n"
+            f"Service: {service}\n"
+            f"Date: {date} at {time}\n"
+            f"Notes: {notes}"
         )
 
         message = contact.models.Message(
             full_name="Hairitage Studio",
-            email="info@hairitage-studio.co.za",
-            message_text=message_text
+            email=settings.DEFAULT_FROM_EMAIL,
+            message_text=message_text,
+            subject="New Appointment"
         )
         message.save()
 
-        messages.success(request, 'Your appointment has been successfully received. ')
+        # --- Send Emails ---
+        with get_connection(
+                host=settings.EMAIL_HOST,
+                port=settings.EMAIL_PORT,
+                username=settings.EMAIL_HOST_USER,
+                password=settings.EMAIL_HOST_PASSWORD,
+                use_tls=settings.EMAIL_USE_TLS
+        ) as connection:
+            # Acknowledgement to customer
+            user_subject = "Your Appointment Confirmation – Hairitage Studio"
+            user_body = render_to_string("site/emails/appointment_acknowledgment.html", {
+                "full_name": full_name,
+                "service": service,
+                "date": date,
+                "time": time,
+            })
+            user_email = EmailMessage(
+                subject=user_subject,
+                body=user_body,
+                from_email="Hairitage Studio <noreply@hairitage-studio.co.za>",
+                to=[email],
+                reply_to=["info@hairitage-studio.co.za"],
+                connection=connection
+            )
+            user_email.content_subtype = "html"
+            user_email.send()
 
-    return render(request, 'site/contact.html', {'services': work.models.Service.objects.all().order_by('name')})
+            # Notification to admin
+            admin_subject = f"New Appointment: {full_name} - {service}"
+            admin_body = render_to_string("site/emails/appointment_admin.html", {
+                "full_name": full_name,
+                "email": email,
+                "phone": phone,
+                "service": service,
+                "date": date,
+                "time": time,
+                "notes": notes,
+            })
+            admin_email = EmailMessage(
+                subject=admin_subject,
+                body=admin_body,
+                from_email="Hairitage Studio <noreply@hairitage-studio.co.za>",
+                to=["info@hairitage-studio.co.za"],
+                reply_to=[email],
+                connection=connection
+            )
+            admin_email.content_subtype = "html"
+            admin_email.send()
+
+        messages.success(request, 'Your appointment has been successfully received. We’ve sent you a confirmation email.')
+
+    return render(request, 'site/contact.html', {
+        'services': work.models.Service.objects.all().order_by('name')
+    })
 
 
 def contact_page(request):
@@ -128,11 +182,43 @@ def send_email_with(message):
             password=settings.EMAIL_HOST_PASSWORD,
             use_tls=settings.EMAIL_USE_TLS
     ) as connection:
-        subject = message.subject
-        email_from = settings.EMAIL_HOST_USER
-        recipient_list = [message.email, ]
-        message_text = message.message_text
-        EmailMessage(subject, message_text, email_from, recipient_list, connection=connection).send()
+        # --- Acknowledgement to the user ---
+        user_subject = "Thanks for contacting Hairitage Studio"
+        user_body = render_to_string("site/emails/contact_acknowledgment.html", {
+            "full_name": message.full_name,
+            "subject": message.subject,
+        })
+
+        ack_email = EmailMessage(
+            subject=user_subject,
+            body=user_body,
+            from_email="Hairitage Studio <noreply@hairitage-studio.co.za>",
+            to=[message.email],
+            reply_to=[settings.DEFAULT_FROM_EMAIL],
+            connection=connection,
+        )
+        ack_email.content_subtype = "html"
+        ack_email.send()
+
+        # --- Notification to system/admin ---
+        admin_subject = f"New Inquiry: {message.subject}"
+        admin_body = render_to_string("site/emails/contact_admin.html", {
+            "full_name": message.full_name,
+            "email": message.email,
+            "subject": message.subject,
+            "message_text": message.message_text,
+        })
+
+        admin_email = EmailMessage(
+            subject=admin_subject,
+            body=admin_body,
+            from_email="Hairitage Studio <noreply@hairitage-studio.co.za>",
+            to=["info@hairitage-studio.co.za"],
+            reply_to=[message.email],
+            connection=connection,
+        )
+        admin_email.content_subtype = "html"
+        admin_email.send()
 
 
 def work_page(request):
