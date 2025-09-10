@@ -30,6 +30,7 @@ urlpatterns = [
     path('work.html', work_page, name="work"),
     path('book_appointment/', book_appointment, name="book_appointment"),
     path('tinymce/', include('tinymce.urls')),
+    path('legal/', include('legal.urls')),
 ]
 
 urlpatterns += staticfiles_urlpatterns()

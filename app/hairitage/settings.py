@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'configuration',
     'common',
     'contact',
+    'legal',
     'tinymce',
 ]
 
@@ -113,10 +114,10 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'mail.hairitage-studio.co.za'
-EMAIL_HOST_USER = 'info@hairitage-studio.co.za'
-EMAIL_HOST_PASSWORD = 'Philip!72'
-EMAIL_PORT = 587
+EMAIL_HOST = 'live.smtp.mailtrap.io'
+EMAIL_HOST_USER = 'api'
+EMAIL_HOST_PASSWORD = 'ba71f45eb1cbae7971dd42a49bc6905b'
+EMAIL_PORT = '587'
 EMAIL_USE_TLS = True
 EMAIL_USE_SSL = False
 DEFAULT_FROM_EMAIL = 'info@hairitage-studio.co.za'

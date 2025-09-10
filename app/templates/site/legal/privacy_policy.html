@@ -1,0 +1,17 @@
+{% extends 'site/layout.html' %}
+ {% load teams %}
+{% block site-title %}
+    Hairitage Studio - Privacy Policy
+{% endblock site-title %}
+{% block content %}
+     <section class="ftco-section contact-section">
+		 <div class="container">
+    		<div class="row">
+    			<div class="col-md-12 ftco-animate">
+					<p><strong>Last updated:</strong> {{ privacy_policy.updated_at|date:"F j, Y" }}</p>
+					{{ privacy_policy.content |safe }}
+				</div>
+			</div>
+		 </div>
+	 </section>
+{% endblock %}

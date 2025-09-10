@@ -1,0 +1,17 @@
+{% extends 'site/layout.html' %}
+ {% load teams %}
+{% block site-title %}
+    Hairitage Studio - Terms of Service
+{% endblock site-title %}
+{% block content %}
+     <section class="ftco-section contact-section">
+		 <div class="container">
+    		<div class="row">
+    			<div class="col-md-12 ftco-animate">
+					<p><strong>Last updated:</strong> {{ terms_of_service.updated_at|date:"F j, Y" }}</p>
+					{{ terms_of_service.content |safe }}
+				</div>
+			</div>
+		 </div>
+	 </section>
+{% endblock %}
