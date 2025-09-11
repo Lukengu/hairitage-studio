@@ -102,8 +102,9 @@ JAZZMIN_SETTINGS = {
         "contact.Message": "fas fa-comment-alt",
         "contact.Reply": "fas fa-reply",
         "contact.Appointment": "fas fa-calendar-check",
-        "legal.Policy": "fas fa-file-lines",
-        "legal.Terms": "fas fa-file-contract",
+        "contact.Prospect": "fas fa-user-plus",
+        "legal.PrivacyPolicy": "fas fa-user-shield",
+        "legal.TermsOfService": "fas fa-scroll",
 
     },
     # Icons that are used when one is not manually specified

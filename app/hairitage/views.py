@@ -74,6 +74,9 @@ def book_appointment(request):
         )
         appointment.save()
 
+        prospect = contact.models.Prospect(full_name=full_name, email=email, phone=phone)
+        prospect.save()
+
         # Build message for logs
         message_text = (
             f"Appointment for {full_name} ({email}, {phone})\n"

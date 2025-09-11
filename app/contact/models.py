@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.db import IntegrityError
 
 
 class Message(models.Model):
@@ -42,3 +43,38 @@ class Appointment(models.Model):
 
     def __str__(self):
         return f'Appointment for {self.full_name} on {self.date} at {self.time}'
+
+
+class Prospect(models.Model):
+    id = models.AutoField(primary_key=True)
+    full_name = models.CharField(max_length=100)
+    email = models.CharField(max_length=100)
+    phone = models.CharField(max_length=15, blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=['full_name', 'email', 'phone'],
+                name='unique_prospect'
+            )
+        ]
+
+    def save(self, *args, **kwargs):
+        # Check if a duplicate already exists
+        if Prospect.objects.filter(
+                full_name=self.full_name,
+                email=self.email,
+                phone=self.phone
+        ).exists():
+            # Skip saving if duplicate found
+            return
+
+        try:
+            super().save(*args, **kwargs)
+        except IntegrityError:
+            # In case of race conditions (concurrent saves), skip
+            pass
+
+    def __str__(self):
+        return self.full_name

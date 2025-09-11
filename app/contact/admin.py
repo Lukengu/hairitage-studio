@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Message, Reply, Appointment
+from .models import Message, Reply, Appointment, Prospect
 
 
 @admin.register(Message)
@@ -25,5 +25,14 @@ class AppointmentAdmin(admin.ModelAdmin):
     list_display = ['full_name', 'email', 'phone', 'service', 'date', 'time', 'notes', 'created_at']
     list_filter = ['service', 'date', 'created_at']
     search_fields = ['full_name', 'email', 'phone', 'service']
+    ordering = ['-created_at']
+    readonly_fields = ['created_at']
+
+
+@admin.register(Prospect)
+class ProspectAdmin(admin.ModelAdmin):
+    list_display = ['full_name', 'email', 'phone', 'created_at']
+    list_filter = ['created_at']
+    search_fields = ['full_name', 'email', 'phone']
     ordering = ['-created_at']
     readonly_fields = ['created_at']
