@@ -18,10 +18,10 @@
                      <p><span>Address:</span> {% physical_address %}</p>
                    </div>
                    <div class="col-md-12 mb-3">
-                     <p><span>Phone:</span> <a href="tel://{% contact_number %}">{% contact_number %}</a></p>
+                     <p><span>Phone:</span> <a href="https://wa.me/{{ contact_number|cut:'+' }}">{% contact_number %}</a></p>
                    </div>
                    <div class="col-md-12 mb-3">
-                     <p><span>Email:</span> <a href="mailto:{% email_address %}">{% email_address %}</a></p>
+                     <p><span>Email:</span> <a href="mailto:{{ email_address }}">{% email_address %}</a></p>
                    </div>
                    <div class="col-md-12 mb-3">
                      <p><span>Website:</span> <a href="#">hairitage-studio.co.za</a></p>
