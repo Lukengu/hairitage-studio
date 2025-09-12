@@ -121,6 +121,7 @@ EMAIL_PORT = '587'
 EMAIL_USE_TLS = True
 EMAIL_USE_SSL = False
 DEFAULT_FROM_EMAIL = 'info@hairitage-studio.co.za'
+DEFAULT_NO_REPLY_EMAIL = 'Hairitage Studio <noreply@hairitage-studio.co.za>'
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/

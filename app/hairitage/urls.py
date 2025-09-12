@@ -16,19 +16,23 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from .views import home_page, about_page, blog_page, contact_page, service_page, work_page, book_appointment
+from .views import home_page
 from django.contrib.staticfiles.urls import static, staticfiles_urlpatterns
+from blog import views as blog_views
+from contact import views as contact_views
+from product import views as product_views
+from work import views as work_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', home_page, name="home"),
-    path('about.html', about_page, name="about"),
-    path('blog.html', blog_page, name="blog"),
+    path('about.html', blog_views.about_page, name="about"),
+    path('blog.html', blog_views.blog_page, name="blog"),
     path('blog/', include('blog.urls')),
-    path('services.html', service_page, name="services"),
-    path('contact.html', contact_page, name="contact"),
-    path('work.html', work_page, name="work"),
-    path('book_appointment/', book_appointment, name="book_appointment"),
+    path('services.html', product_views.service_page, name="services"),
+    path('contact.html', contact_views.contact_page, name="contact"),
+    path('work.html', work_views.work_page, name="work"),
+    path('book_appointment/', contact_views.book_appointment, name="book_appointment"),
     path('tinymce/', include('tinymce.urls')),
     path('legal/', include('legal.urls')),
 ]

@@ -9,6 +9,12 @@ Hairitage Studio — Our Work
 {% block content %}
 <section class="ftco-section contact-section">
 	<div class="container mt-5">
+		<div class="row align-items-start">
+			<div class="col-md-12 heading-section text-center ftco-animate mb-5">
+				<h2 class="mb-4">{{post.title}}</h2>
+				<p>{{post.content | safe }}</p>
+			</div>
+		</div>
 		<div class="row align-items-start"> <!-- align items top -->
 			<!-- Left panel with categories -->
 			<div class="col-md-3">
@@ -21,7 +27,7 @@ Hairitage Studio — Our Work
 							{% for sub in category.subcategories.all %}
 							<li class="ps-3 py-1 {% if request.GET.cat_id|default:0 == sub.id %}bg-primary text-white rounded fw-bold{% endif %}">
 								<a href="?cat_id={{ sub.id }}" class="text-decoration-none {% if request.GET.cat_id|default:0 == sub.id %}text-white{% else %}text-dark{% endif %}">
-									&raquo; {{ sub.name }}
+									&raquo; {{ sub.name }} ({{ sub.ct }})
 								</a>
 							</li>
 							{% endfor %}

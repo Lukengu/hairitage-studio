@@ -6,5 +6,5 @@ register = template.Library()
 
 @register.simple_tag
 def about_intro():
-    content = Post.objects.filter(type='content').filter(status='PUBLISH').first()
+    content = Post.objects.filter(type='content').filter(status='PUBLISH').filter(category_id__name__icontains="Hair").first()
     return mark_safe(content.intro)
