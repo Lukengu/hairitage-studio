@@ -5,6 +5,7 @@
 {% load about_intro %}
 {% load banners %}
 {% load breadcrumb %}
+{% load socials %}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -76,11 +77,7 @@
             <div class="ftco-footer-widget mb-4">
               <h2 class="ftco-heading-2">About Us</h2>
               <p>{% about_intro %}</p>
-              <ul class="ftco-footer-social list-unstyled float-md-left float-lft mt-5">
-                <li class="ftco-animate"><a target="_blank" href="#"><span class="icon-twitter"></span></a></li>
-                <li class="ftco-animate"><a target="_blank"  href="https://www.facebook.com/profile.php?id=61580385158057"><span class="icon-facebook"></span></a></li>
-                <li class="ftco-animate"><a target="_blank" href="https://www.instagram.com/hairitage.hairsalon/"><span class="icon-instagram"></span></a></li>
-              </ul>
+				{% socials %}
             </div>
           </div>
           <div class="col-md-5">
