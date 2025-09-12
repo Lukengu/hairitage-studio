@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from .models import Item, Category
 from django.core.paginator import Paginator
+from django.db.models import Count, Prefetch
 import blog
 
 ITEM_PER_PAGE = 6
@@ -23,24 +24,14 @@ def work_page(
     # Get main categories and prefetch their subcategories with item counts
     work_categories = (
         Category.objects
-        .filter(parent_id__isnull=True)
-        .prefetch_related('subcategories')
-        .order_by('name')
-    )
-
-    subcategories = Category.objects.raw(
-        """
-        SELECT
-            work_category.id,
-            work_category.name,
-            COUNT(work.*) as ct
-        FROM work_category
-        LEFT JOIN work
-            ON work_category.id = work.category_id
-        WHERE work_category.parent_id IS NOT NULL
-        GROUP BY work.category_id
-        ORDER BY work_category.name
-        """
+        .filter(parent__isnull=True)  # only top-level categories
+        .prefetch_related(
+            Prefetch(
+                "subcategories",
+                queryset=Category.objects.annotate(ct=Count("works")).order_by("name")
+            )
+        )
+        .order_by("name")
     )
 
     context = {
@@ -49,6 +40,5 @@ def work_page(
         'range': range(1, works.paginator.num_pages + 1),
         'page': int(page),
         'work_categories': work_categories,
-        'subcategories': subcategories,
     }
     return render(request, 'site/work.html', context)
