@@ -5,7 +5,7 @@ from django.conf import settings
 import logging
 
 
-from .log.models import WhatsAppMessage
+from app.log.models import WhatsAppMessage
 
 
 def send_whatsapp_template(to, template_name, language_code="en", parameters=None):
