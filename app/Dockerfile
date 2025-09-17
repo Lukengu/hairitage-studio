@@ -21,10 +21,17 @@ RUN apt-get update && \
     && rm -rf /var/lib/apt/lists/*
 
 # Upgrade pip and install flake8 for linting
-RUN pip install --upgrade pip flake8==6.0.0
+RUN pip install --no-cache-dir black isort flake8 autopep8
+
 
 # Copy project files for linting
 COPY . /usr/src/app/
+
+# Run auto-formatters
+RUN isort .
+RUN black .
+RUN autopep8 --in-place --recursive .
+
 RUN flake8 --ignore=E501,F401,E241,W292,F811 .
 
 # Copy requirements and build wheels

@@ -35,6 +35,7 @@ urlpatterns = [
     path('book_appointment/', contact_views.book_appointment, name="book_appointment"),
     path('tinymce/', include('tinymce.urls')),
     path('legal/', include('legal.urls')),
+    path('logs/', include('log.urls')),
 ]
 
 urlpatterns += staticfiles_urlpatterns()

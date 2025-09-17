@@ -5,3 +5,6 @@ gunicorn
 django-seed
 Pillow
 django-tinymce
+requests
+django-phonenumber-field
+phonenumbers

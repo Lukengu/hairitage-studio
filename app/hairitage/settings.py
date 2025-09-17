@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 import os
+import sys
 
 from pathlib import Path
 from .jazzmin import JAZZMIN_SETTINGS
@@ -46,6 +47,7 @@ INSTALLED_APPS = [
     'common',
     'contact',
     'legal',
+    'log',
     'tinymce',
 ]
 
@@ -123,6 +125,10 @@ EMAIL_USE_SSL = False
 DEFAULT_FROM_EMAIL = 'info@hairitage-studio.co.za'
 DEFAULT_NO_REPLY_EMAIL = 'Hairitage Studio <noreply@hairitage-studio.co.za>'
 
+WHATSAPP_ACCESS_TOKEN = 'EAALezTT1X9YBPVH2b6zB2FNDn6WXeo18NTHgiar6VrOwODe7m7DEPB1yry03raEa32l1FAoqZCI7VkwuZCgZANZBVZCZB3QgOOfNrFSD9n1YMPCOTUU2k40jJ4LGebEHklIJT8PNwXDZC0wGqo6cdFSNRXyVt9zZA99i8eyguUZAnusFOabsjXy96ASE3QbZCNkHP1wQZDZD'
+WHATSAPP_PHONE_NUMBER_ID = '852836871243220'
+WHATSAPP_API_URL = f"https://graph.facebook.com/v21.0/{WHATSAPP_PHONE_NUMBER_ID}/messages"
+
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/
 
@@ -153,3 +159,21 @@ CSRF_TRUSTED_ORIGINS = [
     "https://hairitage-studio.co.za",
     "https://www.hairitage-studio.co.za"
 ]
+
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "handlers": {
+        "console": {
+            "level": "DEBUG",
+            "class": "logging.StreamHandler",
+            "stream": sys.stdout,
+        },
+    },
+    "loggers": {
+        "django": {"handlers": ["console"], "level": "INFO"},
+        "__main__": {"handlers": ["console"], "level": "DEBUG"},
+        # your module
+        "contact": {"handlers": ["console"], "level": "DEBUG", "propagate": True},
+    },
+}
