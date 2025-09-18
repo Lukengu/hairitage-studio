@@ -105,7 +105,7 @@ JAZZMIN_SETTINGS = {
         "contact.Prospect": "fas fa-user-plus",
         "legal.PrivacyPolicy": "fas fa-user-shield",
         "legal.TermsOfService": "fas fa-scroll",
-        "log.WhatsAppMessage": "fa-brands fa-whatsapp"
+        "log.WhatsAppMessage": "fab fa-whatsapp"
 
     },
     # Icons that are used when one is not manually specified
