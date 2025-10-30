@@ -155,9 +155,9 @@ MEDIA_ROOT = BASE_DIR / "media"
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 JAZZMIN_SETTINGS = JAZZMIN_SETTINGS
 CSRF_TRUSTED_ORIGINS = [
-    "http://localhost:1337",
-    "https://hairitage-studio.co.za",
-    "https://www.hairitage-studio.co.za"
+    "localhost:1337",
+    "hairitage-studio.co.za",
+    "www.hairitage-studio.co.za"
 ]
 
 LOGGING = {
