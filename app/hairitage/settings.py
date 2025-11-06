@@ -126,7 +126,7 @@ DEFAULT_FROM_EMAIL = 'info@hairitage-studio.co.za'
 DEFAULT_NO_REPLY_EMAIL = 'Hairitage Studio <noreply@hairitage-studio.co.za>'
 
 WHATSAPP_ACCESS_TOKEN = 'EAALezTT1X9YBPVH2b6zB2FNDn6WXeo18NTHgiar6VrOwODe7m7DEPB1yry03raEa32l1FAoqZCI7VkwuZCgZANZBVZCZB3QgOOfNrFSD9n1YMPCOTUU2k40jJ4LGebEHklIJT8PNwXDZC0wGqo6cdFSNRXyVt9zZA99i8eyguUZAnusFOabsjXy96ASE3QbZCNkHP1wQZDZD'
-WHATSAPP_PHONE_NUMBER_ID = '852836871243220'
+WHATSAPP_PHONE_NUMBER_ID = '828367443686275'
 WHATSAPP_API_URL = f"https://graph.facebook.com/v21.0/{WHATSAPP_PHONE_NUMBER_ID}/messages"
 
 # Internationalization
@@ -155,9 +155,9 @@ MEDIA_ROOT = BASE_DIR / "media"
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 JAZZMIN_SETTINGS = JAZZMIN_SETTINGS
 CSRF_TRUSTED_ORIGINS = [
-    "localhost:1337",
-    "hairitage-studio.co.za",
-    "www.hairitage-studio.co.za"
+    "http://localhost:1337",
+    "https://hairitage-studio.co.za",
+    "https://www.hairitage-studio.co.za"
 ]
 
 LOGGING = {
