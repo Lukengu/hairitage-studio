@@ -26,6 +26,7 @@ def send_whatsapp_template(to, template_name, language_code="en", parameters=Non
 
     body = {
         "messaging_product": "whatsapp",
+        "recipient_type": "individual",
         "to": to,
         "type": "template",
         "template": {
