@@ -15,6 +15,7 @@ class Settings(models.Model):
     twitter = models.CharField(max_length=100, null=True, blank=True)
     instagram = models.CharField(max_length=100, null=True, blank=True)
     linkedin = models.CharField(max_length=100, null=True, blank=True)
+    tiktok = models.CharField(max_length=100, null=True, blank=True)
     opening_hours = HTMLField(null=True, blank=True)
 
     class Meta:

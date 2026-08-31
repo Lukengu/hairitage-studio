@@ -6,15 +6,31 @@ from django.core.mail import EmailMessage, get_connection
 from django.conf import settings
 from django.db.models import Count
 from django.template.loader import render_to_string
-
+from django.http import FileResponse, Http404
+from django.views.decorators.cache import cache_control
+import mimetypes
 
 import product
 import configuration
 import contact
 import blog
 import work
+from hairitage.storage_backends import MediaGCSStorage
 
 register = template.Library()
+
+
+@cache_control(max_age=86400, public=True)
+def serve_media(request, path):
+    if not settings.USE_GCS:
+        raise Http404("Media not found")
+
+    storage = MediaGCSStorage()
+    if not storage.exists(path):
+        raise Http404("Media not found")
+
+    content_type, _ = mimetypes.guess_type(path)
+    return FileResponse(storage.open(path), content_type=content_type or "application/octet-stream")
 
 
 def home_page(request):

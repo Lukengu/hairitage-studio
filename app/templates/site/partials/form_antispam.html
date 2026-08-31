@@ -1,0 +1,19 @@
+<style>
+  .hp-field {
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+  }
+</style>
+<input type="hidden" name="form_token" value="{{ form_token }}">
+<div class="hp-field" aria-hidden="true">
+  <label for="{{ honeypot_id }}">Company website</label>
+  <input type="text" name="company_website" id="{{ honeypot_id }}" tabindex="-1" autocomplete="off" value="">
+</div>
+{% if turnstile_enabled %}
+<div class="form-group">
+  <div class="cf-turnstile" id="{{ turnstile_widget_id }}"></div>
+</div>
+{% endif %}

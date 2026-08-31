@@ -31,7 +31,7 @@
 			 <div class="col-md-4 ftco-animate" data-src="{{ work_category.featured_image }}">
                         <a href="work.html" class="work-thumb">
                             <div class="card shadow-sm h-100 border-0">
-                                <img src="/media/{{ work_category.featured_image }}"
+                                <img src="{{ work_category.featured_image.url }}"
                                      class="card-img-top img-fluid"
                                      alt="{{ work_category.name }}"
                                      style="height: 350px; object-fit: cover; object-position: top; border-top-left-radius: .5rem; border-top-right-radius: .5rem;">

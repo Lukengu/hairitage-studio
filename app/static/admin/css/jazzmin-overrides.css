@@ -1,0 +1,12 @@
+/* Jazzmin sets login_logo_dark = login_logo, which renders two identical logos. */
+.login-logo img.logo-dark {
+    display: none;
+}
+
+html[data-bs-theme="dark"] .login-logo img.logo-light {
+    display: none;
+}
+
+html[data-bs-theme="dark"] .login-logo img.logo-dark {
+    display: inline;
+}

@@ -8162,9 +8162,19 @@ textarea.form-control {
     .ftco-footer-social li a:hover {
       color: #fff; }
 
+.ftco-footer-social li a span.icon-tiktok {
+  display: block;
+  width: 26px;
+  height: 26px; }
+  .ftco-footer-social li a span.icon-tiktok svg {
+    width: 100%;
+    height: 100%;
+    display: block; }
+
 #map {
   height: 500px;
-  width: 100%; }
+  width: 100%;
+  z-index: 0; }
   @media (max-width: 991.98px) {
     #map {
       height: 300px; } }

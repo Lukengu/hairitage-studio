@@ -8,6 +8,8 @@ WORKDIR /usr/src/app
 
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
+ENV PIP_DEFAULT_TIMEOUT=300
+ENV PIP_RETRIES=10
 
 # Install build dependencies
 RUN apt-get update && \
@@ -20,8 +22,9 @@ RUN apt-get update && \
         curl \
     && rm -rf /var/lib/apt/lists/*
 
-# Upgrade pip and install flake8 for linting
-RUN pip install --no-cache-dir black isort flake8 autopep8
+# Upgrade pip and install lint/format tools
+RUN pip install --upgrade pip && \
+    pip install --no-cache-dir black isort flake8 autopep8
 
 
 # Copy project files for linting
@@ -34,7 +37,7 @@ RUN autopep8 --in-place --recursive .
 
 RUN flake8 --ignore=E501,F401,E241,W292,F811 .
 
-# Copy requirements and build wheels
+# Copy requirements and build wheels (long timeout for slow PyPI downloads)
 COPY ./requirements.txt .
 RUN pip wheel --no-cache-dir --no-deps --wheel-dir /usr/src/app/wheels -r requirements.txt
 
@@ -48,6 +51,8 @@ WORKDIR /home/app/web
 
 ENV HOME=/home/app
 ENV APP_HOME=/home/app/web
+ENV PIP_DEFAULT_TIMEOUT=300
+ENV PIP_RETRIES=10
 
 # Create app user
 RUN addgroup --system app && adduser --system --group app

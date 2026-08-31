@@ -10,7 +10,7 @@
             {% for team in teams %}
                 <div class="col-lg-3 d-flex mb-sm-4 ftco-animate">
         		<div class="staff">
-      				<div class="img mb-4" style="background-image: url(/media/{{ team.photo }});"></div>
+      				<div class="img mb-4" style="background-image: url({{ team.photo.url }});"></div>
       				<div class="info text-center">
       					<h3>{{ team.name }}</h3>
       					<span class="position">{{ team.position }}</span>

@@ -6,5 +6,5 @@ register = template.Library()
 
 @register.simple_tag
 def email_address():
-    setting = Settings.objects.get(pk=1)
-    return setting.email_address
+    setting = Settings.objects.filter(pk=1).first()
+    return setting.email_address if setting else ""

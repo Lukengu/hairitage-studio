@@ -18,6 +18,9 @@ def send_whatsapp_template(to, template_name, language_code="en", parameters=Non
         language_code (str): Language code (e.g., 'en', 'en_US').
         parameters (list): List of text strings matching the template placeholders.
     """
+    if not settings.WHATSAPP_API_URL or not settings.WHATSAPP_ACCESS_TOKEN:
+        return None
+
     logger = logging.getLogger(__name__)
     headers = {
         "Authorization": f"Bearer {settings.WHATSAPP_ACCESS_TOKEN}",

@@ -6,10 +6,11 @@ register = template.Library()
 
 @register.inclusion_tag('site/tags/socials.html', takes_context=True)
 def socials(context):
-    setting = Settings.objects.get(pk=1)
+    setting = Settings.objects.filter(pk=1).first()
     return {
-        'facebook': setting.facebook,
-        'twitter': setting.twitter,
-        'instagram': setting.instagram,
-        'linkedin': setting.linkedin,
+        'facebook': setting.facebook if setting else '',
+        'twitter': setting.twitter if setting else '',
+        'instagram': setting.instagram if setting else '',
+        'linkedin': setting.linkedin if setting else '',
+        'tiktok': setting.tiktok if setting else '',
     }

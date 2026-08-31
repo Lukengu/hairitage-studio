@@ -9,19 +9,16 @@ JAZZMIN_SETTINGS = {
     "site_brand": "Hairitage Studio",
 
     # Logo to use for your site, must be present in static files, used for brand on top left
-    "site_logo": "/images/logo_small.png",
+    "site_logo": "images/logo_small.png",
 
     # Logo to use for your site, must be present in static files, used for login form logo (defaults to site_logo)
-    "login_logo": "/images/logo_small.png",
+    "login_logo": "images/logo_small.png",
 
-    # Logo to use for login form in dark themes (defaults to login_logo)
-    "login_logo_dark": "/images/logo_small.png",
+    # Relative path to a favicon for your site, will default to site_logo if absent (ideally 32x32 px)
+    "site_icon": "images/logo_small.png",
 
     # CSS classes that are applied to the logo above
     "site_logo_classes": "img-circle",
-
-    # Relative path to a favicon for your site, will default to site_logo if absent (ideally 32x32 px)
-    "site_icon": None,
 
     # Welcome text on the login screen
     "welcome_sign": "Welcome to the Hairitage Studio",
@@ -122,7 +119,7 @@ JAZZMIN_SETTINGS = {
     # UI Tweaks #
     #############
     # Relative paths to custom CSS/JS scripts (must be present in static files)
-    "custom_css": None,
+    "custom_css": "admin/css/jazzmin-overrides.css",
     "custom_js": None,
     # Whether to link font from fonts.googleapis.com (use custom_css to supply font otherwise)
     "use_google_fonts_cdn": True,

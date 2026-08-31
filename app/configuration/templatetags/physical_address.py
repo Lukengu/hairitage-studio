@@ -7,5 +7,7 @@ register = template.Library()
 
 @register.simple_tag
 def physical_address():
-    setting = Settings.objects.get(pk=1)
+    setting = Settings.objects.filter(pk=1).first()
+    if not setting or not setting.physical_address:
+        return ""
     return mark_safe(setting.physical_address)

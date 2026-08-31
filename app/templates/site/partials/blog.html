@@ -10,7 +10,7 @@
             {% for post in posts %}
                   <div class="col-md-4 d-flex ftco-animate">
           	        <div class="blog-entry align-self-stretch">
-              <a href="/blog/details.html?id={{ post.id }}" class="block-20" style="background-image: url('/media/{{ post.image }}');">
+              <a href="/blog/details.html?id={{ post.id }}" class="block-20" style="background-image: url('{{ post.image.url }}');">
               </a>
               <div class="text py-4 d-block">
               	<div class="meta">

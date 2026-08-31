@@ -130,10 +130,7 @@
   <script src="/static/site/assets/js/bootstrap-datepicker.js"></script>
   <script src="/static/site/assets/js/jquery.timepicker.min.js"></script>
   <script src="/static/site/assets/js/scrollax.min.js"></script>
-  {% if 'contact' in request.path %}
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBsj07o2zu8VZmP8IccKVuMhSNS7BKn43E&sensor=false"></script>
-    <script src="/static/site/assets/js/google-map.js"></script>
-  {% endif %}
+  {% block extra_scripts %}{% endblock %}
 
   <script src="/static/site/assets/js/main.js"></script>
     

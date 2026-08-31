@@ -14,4 +14,8 @@ fi
 #python manage.py flush --no-input
 python manage.py migrate
 
+if [ "$COLLECT_STATIC" = "1" ]; then
+    python manage.py collectstatic --no-input
+fi
+
 exec "$@"

@@ -22,12 +22,22 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get('SECRET_KEY')
+SECRET_KEY = os.environ.get('SECRET_KEY', '').strip()
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = bool(os.environ.get("DEBUG", default=0))
+DEBUG = bool(int(os.environ.get("DEBUG", default=0)))
 
-ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS").split(" ")
+ALLOWED_HOSTS = [
+    host.strip()
+    for host in os.environ.get("DJANGO_ALLOWED_HOSTS", "localhost").replace(" ", ",").split(",")
+    if host.strip()
+]
+
+GS_BUCKET_NAME = os.environ.get("GS_BUCKET_NAME")
+USE_GCS = bool(GS_BUCKET_NAME)
+GCS_PUBLIC_BUCKET = os.environ.get("GCS_PUBLIC_BUCKET", "0") == "1"
+SYNC_STATIC_TO_GCS = os.environ.get("SYNC_STATIC_TO_GCS", "0") == "1"
+CLOUD_SQL_CONNECTION_NAME = os.environ.get("CLOUD_SQL_CONNECTION_NAME")
 
 # Application definition
 
@@ -51,6 +61,9 @@ INSTALLED_APPS = [
     'tinymce',
 ]
 
+if USE_GCS:
+    INSTALLED_APPS.insert(INSTALLED_APPS.index('django.contrib.staticfiles') + 1, 'storages')
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -60,6 +73,9 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+if not USE_GCS or (USE_GCS and not GCS_PUBLIC_BUCKET):
+    MIDDLEWARE.insert(1, 'whitenoise.middleware.WhiteNoiseMiddleware')
 
 ROOT_URLCONF = 'hairitage.urls'
 
@@ -91,11 +107,16 @@ DATABASES = {
         "ENGINE": os.environ.get("SQL_ENGINE", "django.db.backends.sqlite3"),
         "NAME": os.environ.get("SQL_DATABASE", BASE_DIR / "db.sqlite3"),
         "USER": os.environ.get("SQL_USER", "user"),
-        "PASSWORD": os.environ.get("SQL_PASSWORD", "password"),
+        "PASSWORD": os.environ.get("SQL_PASSWORD", "password").strip(),
         "HOST": os.environ.get("SQL_HOST", "localhost"),
         "PORT": os.environ.get("SQL_PORT", "5432"),
     }
 }
+
+if CLOUD_SQL_CONNECTION_NAME:
+    DATABASES["default"]["HOST"] = f"/cloudsql/{CLOUD_SQL_CONNECTION_NAME}"
+    DATABASES["default"]["PORT"] = ""
+    DATABASES["default"]["OPTIONS"] = {"connect_timeout": 10}
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
@@ -116,18 +137,30 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'live.smtp.mailtrap.io'
-EMAIL_HOST_USER = 'api'
-EMAIL_HOST_PASSWORD = 'ba71f45eb1cbae7971dd42a49bc6905b'
-EMAIL_PORT = '587'
-EMAIL_USE_TLS = True
-EMAIL_USE_SSL = False
-DEFAULT_FROM_EMAIL = 'info@hairitage-studio.co.za'
-DEFAULT_NO_REPLY_EMAIL = 'Hairitage Studio <noreply@hairitage-studio.co.za>'
+EMAIL_HOST = os.environ.get('EMAIL_HOST', 'smtp.gmail.com')
+EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER', 'info@hairitage-studio.co.za')
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD', '')
+EMAIL_PORT = int(os.environ.get('EMAIL_PORT', '465'))
+EMAIL_USE_TLS = os.environ.get('EMAIL_USE_TLS', 'False') == 'True'
+EMAIL_USE_SSL = os.environ.get('EMAIL_USE_SSL', 'True') == 'True'
+DEFAULT_FROM_EMAIL = os.environ.get('DEFAULT_FROM_EMAIL', 'info@hairitage-studio.co.za')
+DEFAULT_NO_REPLY_EMAIL = os.environ.get(
+    'DEFAULT_NO_REPLY_EMAIL',
+    'Hairitage Studio <noreply@hairitage-studio.co.za>',
+)
 
-WHATSAPP_ACCESS_TOKEN = 'EAALezTT1X9YBPVH2b6zB2FNDn6WXeo18NTHgiar6VrOwODe7m7DEPB1yry03raEa32l1FAoqZCI7VkwuZCgZANZBVZCZB3QgOOfNrFSD9n1YMPCOTUU2k40jJ4LGebEHklIJT8PNwXDZC0wGqo6cdFSNRXyVt9zZA99i8eyguUZAnusFOabsjXy96ASE3QbZCNkHP1wQZDZD'
-WHATSAPP_PHONE_NUMBER_ID = '828367443686275'
-WHATSAPP_API_URL = f"https://graph.facebook.com/v21.0/{WHATSAPP_PHONE_NUMBER_ID}/messages"
+WHATSAPP_ACCESS_TOKEN = os.environ.get('WHATSAPP_ACCESS_TOKEN', '')
+WHATSAPP_PHONE_NUMBER_ID = os.environ.get('WHATSAPP_PHONE_NUMBER_ID', '')
+WHATSAPP_API_URL = (
+    f"https://graph.facebook.com/v21.0/{WHATSAPP_PHONE_NUMBER_ID}/messages"
+    if WHATSAPP_PHONE_NUMBER_ID
+    else ''
+)
+
+TURNSTILE_SITE_KEY = os.environ.get('TURNSTILE_SITE_KEY', '')
+TURNSTILE_SECRET_KEY = os.environ.get('TURNSTILE_SECRET_KEY', '')
+
+GOOGLE_MAPS_API_KEY = os.environ.get('GOOGLE_MAPS_API_KEY', '')
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/
@@ -143,22 +176,65 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
-STATIC_URL = 'static/'
-STATIC_ROOT = BASE_DIR / "static"
-
-MEDIA_URL = 'media/'
+STATICFILES_DIRS = [BASE_DIR / "static"]
+STATIC_ROOT = BASE_DIR / "collected_static"
 MEDIA_ROOT = BASE_DIR / "media"
+
+if USE_GCS:
+    GS_DEFAULT_ACL = None
+    GS_QUERYSTRING_AUTH = False
+    use_gcs_static = GCS_PUBLIC_BUCKET or SYNC_STATIC_TO_GCS
+    STORAGES = {
+        "default": {
+            "BACKEND": "hairitage.storage_backends.MediaGCSStorage",
+        },
+        "staticfiles": {
+            "BACKEND": (
+                "hairitage.storage_backends.StaticGCSStorage"
+                if use_gcs_static
+                else "django.contrib.staticfiles.storage.StaticFilesStorage"
+            ),
+        },
+    }
+    if GCS_PUBLIC_BUCKET:
+        STATIC_URL = f"https://storage.googleapis.com/{GS_BUCKET_NAME}/static/"
+        MEDIA_URL = f"https://storage.googleapis.com/{GS_BUCKET_NAME}/media/"
+    else:
+        STATIC_URL = "/static/"
+        MEDIA_URL = "/media/"
+else:
+    STATIC_URL = "/static/"
+    MEDIA_URL = "/media/"
+    STORAGES = {
+        "default": {
+            "BACKEND": "django.core.files.storage.FileSystemStorage",
+        },
+        "staticfiles": {
+            "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
+        },
+    }
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 JAZZMIN_SETTINGS = JAZZMIN_SETTINGS
+
 CSRF_TRUSTED_ORIGINS = [
     "http://localhost:1337",
+    "http://localhost:8000",
     "https://hairitage-studio.co.za",
-    "https://www.hairitage-studio.co.za"
+    "https://www.hairitage-studio.co.za",
 ]
+
+_extra_csrf = os.environ.get("CSRF_TRUSTED_ORIGINS_EXTRA", "")
+if _extra_csrf:
+    CSRF_TRUSTED_ORIGINS.extend(origin.strip() for origin in _extra_csrf.split(",") if origin.strip())
+
+if not DEBUG:
+    SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
 
 LOGGING = {
     "version": 1,
@@ -173,7 +249,6 @@ LOGGING = {
     "loggers": {
         "django": {"handlers": ["console"], "level": "INFO"},
         "__main__": {"handlers": ["console"], "level": "DEBUG"},
-        # your module
         "contact": {"handlers": ["console"], "level": "DEBUG", "propagate": True},
     },
 }
