@@ -39,15 +39,23 @@ def _contact_form_context():
     }
 
 
-def _block_spam_submission(request, exc):
+def _block_spam_submission(request, exc, redirect_to="contact"):
     logger.warning("Antispam blocked submission: %s", exc)
     if exc.silent:
-        return redirect("contact")
+        return redirect(redirect_to)
     if "verification" in str(exc).lower():
         messages.error(request, "Please complete the Cloudflare verification and try again.")
     else:
         messages.error(request, "Could not submit the form. Please wait a few seconds and try again.")
-    return redirect("contact")
+    return redirect(redirect_to)
+
+
+def booking_page(request):
+    services = work.models.Service.objects.all().order_by('name')
+    return render(request, 'site/booking.html', {
+        'services': services,
+        **_contact_form_context(),
+    })
 
 
 def book_appointment(request):
@@ -55,7 +63,7 @@ def book_appointment(request):
         try:
             validate_contact_form(request)
         except AntispamError as exc:
-            return _block_spam_submission(request, exc)
+            return _block_spam_submission(request, exc, redirect_to="booking")
 
         full_name = request.POST.get('full_name')
         email = request.POST.get('email')
@@ -90,7 +98,7 @@ def book_appointment(request):
 
         try:
             send_email(
-                subject=f"Your Appointment Confirmation – {site_name}",
+                subject=f"Your Appointment Confirmation - {site_name}",
                 message=render_to_string(
                     "site/emails/appointment_acknowledgment.html",
                     {"full_name": full_name, "service": service, "date": date, "time": time},
@@ -142,10 +150,10 @@ def book_appointment(request):
 
         messages.success(
             request,
-            'Your appointment has been successfully received. We’ve sent you a confirmation email.',
+            "Your appointment has been successfully received. We've sent you a confirmation email.",
         )
-        return redirect('contact')
-    return redirect('contact')
+        return redirect('booking')
+    return redirect('booking')
 
 
 def contact_page(request):

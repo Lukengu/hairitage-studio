@@ -17,6 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include, re_path
 from .views import home_page, serve_media
+
 from django.contrib.staticfiles.urls import static, staticfiles_urlpatterns
 from blog import views as blog_views
 from contact import views as contact_views
@@ -32,6 +33,7 @@ urlpatterns = [
     path('blog/', include('blog.urls')),
     path('services.html', product_views.service_page, name="services"),
     path('contact.html', contact_views.contact_page, name="contact"),
+    path('book.html', contact_views.booking_page, name="booking"),
     path('work.html', work_views.work_page, name="work"),
     path('book_appointment/', contact_views.book_appointment, name="book_appointment"),
     path('tinymce/', include('tinymce.urls')),

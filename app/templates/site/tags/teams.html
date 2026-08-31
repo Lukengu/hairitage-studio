@@ -1,26 +1,42 @@
-   <section class="ftco-section bg-light">
-      <div class="container">
-      	<div class="row justify-content-center mb-5 pb-3">
-          <div class="col-md-7 heading-section ftco-animate text-center">
-            <h2 class="mb-4">Meet Our Talented Teams</h2>
-            <p>At Hairitage studio, we take pride in our exceptional teams, each comprised of skilled professionals dedicated to delivering unparalleled beauty and wellness experiences.</p>
+<section class="ftco-section bg-light">
+  <div class="container">
+    <div class="row justify-content-center mb-5 pb-2">
+      <div class="col-md-8 heading-section text-center ftco-animate">
+        <span class="hs-section-label">The People Behind the Magic</span>
+        <h2 class="mb-3">Meet Our Team</h2>
+        <p style="color:var(--hs-gray);font-size:0.92rem;max-width:520px;margin:0 auto;">
+          Passionate professionals who bring skill, creativity, and warmth to every appointment.
+        </p>
+      </div>
+    </div>
+    <div class="row justify-content-center">
+      {% for team in teams %}
+      <div class="col-lg-4 col-md-6 mb-4 ftco-animate d-flex">
+        <div class="hs-team-card w-100">
+          <div class="hs-team-img-wrap">
+            <img src="{{ team.photo.url }}" alt="{{ team.name }}">
+            <div class="hs-team-overlay"></div>
+          </div>
+          <div class="hs-team-body">
+            <h3>{{ team.name }}</h3>
+            <span class="position">{{ team.position }}</span>
+            <div class="hs-team-expertise">
+              {% if forloop.counter == 1 %}
+                <span class="hs-expertise-tag">Natural Hair</span>
+                <span class="hs-expertise-tag">Protective Styles</span>
+              {% elif forloop.counter == 2 %}
+                <span class="hs-expertise-tag">Colour</span>
+                <span class="hs-expertise-tag">Balayage</span>
+              {% else %}
+                <span class="hs-expertise-tag">Client Experience</span>
+                <span class="hs-expertise-tag">Styling</span>
+              {% endif %}
+            </div>
+            <p>{{ team.intro }}</p>
           </div>
         </div>
-        <div class="row">
-            {% for team in teams %}
-                <div class="col-lg-3 d-flex mb-sm-4 ftco-animate">
-        		<div class="staff">
-      				<div class="img mb-4" style="background-image: url({{ team.photo.url }});"></div>
-      				<div class="info text-center">
-      					<h3>{{ team.name }}</h3>
-      					<span class="position">{{ team.position }}</span>
-      					<div class="text">
-	        				<p>{{ team.intro }}</p>
-	        			</div>
-      				</div>
-        		</div>
-        	</div>
-            {% endfor %}
-        </div>
       </div>
-    </section>
+      {% endfor %}
+    </div>
+  </div>
+</section>

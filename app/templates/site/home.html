@@ -7,45 +7,217 @@
 
 {% block content %}
 
-    {% services %}
-    {% teams %}
+<!-- ===== HERO ===== -->
+<section class="hs-hero">
+  <div class="hero-bg"></div>
+  <div class="hero-overlay"></div>
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-lg-7 hero-content">
 
-    {% if promotion  %}
-        {% include "site/partials/promotion.html" %}
-    {% endif %}
+        <span class="hero-eyebrow">Premium Hair Salon &amp; Styling</span>
 
+        <h1>Where Beauty<br>Meets <em>Artistry</em></h1>
 
+        <div class="hero-rating">
+          <span class="hero-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+          <span class="hero-rating-text"><strong>5.0</strong> Rated by 500+ happy clients</span>
+        </div>
 
+        <p class="hero-subtitle">
+          Experience the art of hair transformation at Hairitage Studio. Our expert stylists craft bespoke looks tailored to celebrate your unique beauty.
+        </p>
 
-    <section class="ftco-section">
-    	<div class="container">
-    		<div class="row justify-content-center mb-5 pb-3">
-          <div class="col-md-7 heading-section text-center ftco-animate">
-            <h2 class="mb-4">Our Work</h2>
-            <p></p>
+        <div class="d-flex flex-wrap align-items-center">
+          <a href="/book.html" class="btn-hs-primary">
+            <i class="fa-solid fa-calendar-check"></i> Book Appointment
+          </a>
+          <a href="/work.html" class="btn-hs-outline">
+            <i class="fa-solid fa-images"></i> Browse Gallery
+          </a>
+        </div>
+
+        <div class="hero-badges">
+          <div class="hero-badge">
+            <div class="badge-icon"><i class="fa-solid fa-scissors"></i></div>
+            <div class="badge-text">
+              <strong>Expert Stylists</strong>
+              <span>Certified professionals</span>
+            </div>
+          </div>
+          <div class="hero-badge">
+            <div class="badge-icon"><i class="fa-solid fa-award"></i></div>
+            <div class="badge-text">
+              <strong>Premium Products</strong>
+              <span>Salon-grade only</span>
+            </div>
+          </div>
+          <div class="hero-badge">
+            <div class="badge-icon"><i class="fa-solid fa-clock"></i></div>
+            <div class="badge-text">
+              <strong>Flexible Hours</strong>
+              <span>Mon–Sat available</span>
+            </div>
           </div>
         </div>
-        <div class="row">
-			 {% for work_category in work_categories%}
 
-			 <div class="col-md-4 ftco-animate" data-src="{{ work_category.featured_image }}">
-                        <a href="work.html" class="work-thumb">
-                            <div class="card shadow-sm h-100 border-0">
-                                <img src="{{ work_category.featured_image.url }}"
-                                     class="card-img-top img-fluid"
-                                     alt="{{ work_category.name }}"
-                                     style="height: 350px; object-fit: cover; object-position: top; border-top-left-radius: .5rem; border-top-right-radius: .5rem;">
+      </div>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <div class="scroll-line"></div>
+    <span>Scroll</span>
+  </div>
+</section>
 
-                            </div>
-                        </a>
-                    </div>
-
-
-			 {% endfor %}
+<!-- ===== WHY CHOOSE US ===== -->
+<section class="hs-why-section">
+  <div class="container" style="position:relative;z-index:1;">
+    <div class="row justify-content-center mb-5">
+      <div class="col-md-8 heading-section text-center">
+        <span class="hs-section-label" style="color:var(--hs-gold);">Why Hairitage</span>
+        <h2 style="color:#fff !important;" class="mb-3">The Hairitage Difference</h2>
+        <p style="color:rgba(255,255,255,0.55);font-size:0.92rem;">We don't just style hair — we craft experiences worth remembering.</p>
+      </div>
+    </div>
+    <div class="row justify-content-center">
+      <div class="col-md-3 col-sm-6 mb-4">
+        <div class="hs-why-card">
+          <div class="hs-why-icon"><i class="fa-solid fa-user-tie"></i></div>
+          <h4>Expert Stylists</h4>
+          <p>Our team brings years of training and passion to every client, every visit.</p>
         </div>
-    	</div>
-    </section>
+      </div>
+      <div class="col-md-3 col-sm-6 mb-4">
+        <div class="hs-why-card">
+          <div class="hs-why-icon"><i class="fa-solid fa-flask"></i></div>
+          <h4>Premium Products</h4>
+          <p>We use only salon-grade, hair-safe products that protect while they transform.</p>
+        </div>
+      </div>
+      <div class="col-md-3 col-sm-6 mb-4">
+        <div class="hs-why-card">
+          <div class="hs-why-icon"><i class="fa-solid fa-heart"></i></div>
+          <h4>Personalised Care</h4>
+          <p>Every client receives a tailored consultation — your hair, your vision, our craft.</p>
+        </div>
+      </div>
+      <div class="col-md-3 col-sm-6 mb-4">
+        <div class="hs-why-card">
+          <div class="hs-why-icon"><i class="fa-solid fa-gem"></i></div>
+          <h4>Luxury Experience</h4>
+          <p>Relax in a welcoming atmosphere designed for comfort, style, and indulgence.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
-   	{% stats %}
+<!-- ===== SERVICES ===== -->
+{% services %}
+
+<!-- ===== TEAMS ===== -->
+{% teams %}
+
+<!-- ===== TESTIMONIALS ===== -->
+<section class="hs-testimonials">
+  <div class="container" style="position:relative;z-index:1;">
+    <div class="row justify-content-center mb-5">
+      <div class="col-md-8 heading-section text-center">
+        <span class="hs-section-label">Client Love</span>
+        <h2 class="mb-3">What Our Clients Say</h2>
+        <p style="color:var(--hs-gray);font-size:0.92rem;">Real experiences from real clients — we let our work speak for itself.</p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-4 mb-4">
+        <div class="hs-testi-card">
+          <div class="hs-testi-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+          <p>"Absolutely phenomenal experience from start to finish. My hair has never looked or felt this amazing. The team truly listened to what I wanted."</p>
+          <div class="hs-testi-author">
+            <div class="hs-testi-avatar">T</div>
+            <div>
+              <div class="hs-testi-name">Thabo M.</div>
+              <div class="hs-testi-service">Hair Styling</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 mb-4">
+        <div class="hs-testi-card">
+          <div class="hs-testi-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+          <p>"I came in for a colour correction and left looking like a completely new person. Professional, talented, and so warm. I won't go anywhere else!"</p>
+          <div class="hs-testi-author">
+            <div class="hs-testi-avatar">A</div>
+            <div>
+              <div class="hs-testi-name">Amahle D.</div>
+              <div class="hs-testi-service">Colour &amp; Highlights</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 mb-4">
+        <div class="hs-testi-card">
+          <div class="hs-testi-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+          <p>"Had my bridal hair done here and it was beyond perfect. Every guest complimented my look. Hairitage Studio made my special day even more beautiful."</p>
+          <div class="hs-testi-author">
+            <div class="hs-testi-avatar">N</div>
+            <div>
+              <div class="hs-testi-name">Nadia K.</div>
+              <div class="hs-testi-service">Bridal Styling</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== OUR WORK ===== -->
+<section class="ftco-section" style="background:var(--hs-off-white);">
+  <div class="container">
+    <div class="row justify-content-center mb-5 pb-2">
+      <div class="col-md-8 heading-section text-center ftco-animate">
+        <span class="hs-section-label">Portfolio</span>
+        <h2 class="mb-3">Our Work</h2>
+        <p style="color:var(--hs-gray);font-size:0.92rem;">A glimpse of the transformations that leave our chairs with confidence.</p>
+      </div>
+    </div>
+    <div class="row">
+      {% for work_category in work_categories %}
+      <div class="col-md-4 ftco-animate mb-4">
+        <a href="/work.html" class="work-thumb">
+          <div class="card h-100">
+            <img src="{{ work_category.featured_image.url }}"
+                 class="card-img-top img-fluid"
+                 alt="{{ work_category.name }}"
+                 style="height:320px;object-fit:cover;object-position:top;">
+            <div class="card-body">
+              <h5 style="font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;color:var(--hs-dark);margin:0;">
+                {{ work_category.name }}
+              </h5>
+            </div>
+          </div>
+        </a>
+      </div>
+      {% endfor %}
+    </div>
+    <div class="row mt-3">
+      <div class="col text-center">
+        <a href="/work.html" class="btn-hs-primary" style="font-size:0.78rem;">
+          <i class="fa-solid fa-images"></i> View Full Gallery
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== STATS ===== -->
+{% stats %}
+
+<!-- ===== PROMOTION (if active) ===== -->
+{% if promotion %}
+  {% include "site/partials/promotion.html" %}
+{% endif %}
 
 {% endblock content %}

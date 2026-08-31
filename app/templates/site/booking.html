@@ -1,0 +1,186 @@
+{% extends 'site/layout.html' %}
+{% load services %}
+
+{% block site-title %}Hairitage Studio — Book an Appointment{% endblock %}
+
+{% block content %}
+
+<!-- Page Header -->
+<section style="background:var(--hs-dark);padding:5rem 0 3.5rem;position:relative;overflow:hidden;">
+  <div style="position:absolute;inset:0;background:url('/static/site/assets/images/bg_3.jpg') center/cover no-repeat;opacity:0.08;"></div>
+  <div style="position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,transparent,var(--hs-gold),transparent);"></div>
+  <div class="container text-center" style="position:relative;z-index:1;">
+    <span class="hs-section-label" style="justify-content:center;">Reserve Your Visit</span>
+    <h1 style="font-family:'Playfair Display',serif;color:#fff;font-size:clamp(2rem,4vw,3rem);font-weight:700;margin-bottom:0.75rem;">
+      Book an Appointment
+    </h1>
+    <p style="color:rgba(255,255,255,0.55);font-size:0.92rem;max-width:480px;margin:0 auto;">
+      Choose your service, pick a time that works for you, and let us take care of the rest.
+    </p>
+  </div>
+</section>
+
+<!-- Booking Section -->
+<section class="ftco-section" style="background:var(--hs-off-white);">
+  <div class="container">
+    <div class="row justify-content-center">
+
+      <!-- Left: What to expect -->
+      <div class="col-lg-4 mb-5 mb-lg-0">
+        <div style="background:var(--hs-white);border-radius:var(--hs-radius-lg);padding:2.5rem;box-shadow:var(--hs-shadow-sm);border:1px solid var(--hs-light-gray);height:100%;">
+          <h3 style="font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:700;color:var(--hs-dark);margin-bottom:1.5rem;padding-bottom:0.75rem;border-bottom:2px solid var(--hs-gold-light);">
+            What to Expect
+          </h3>
+
+          <div class="d-flex align-items-start mb-4" style="gap:1rem;">
+            <div style="width:42px;height:42px;border-radius:50%;background:var(--hs-gold-pale);border:1.5px solid var(--hs-gold-light);display:flex;align-items:center;justify-content:center;flex-shrink:0;color:var(--hs-gold-dark);font-size:1rem;">
+              <i class="fa-solid fa-calendar-check"></i>
+            </div>
+            <div>
+              <strong style="display:block;font-size:0.88rem;color:var(--hs-dark);margin-bottom:0.2rem;">Instant Confirmation</strong>
+              <p style="font-size:0.82rem;color:var(--hs-gray);margin:0;line-height:1.6;">You'll receive a confirmation email and WhatsApp message right away.</p>
+            </div>
+          </div>
+
+          <div class="d-flex align-items-start mb-4" style="gap:1rem;">
+            <div style="width:42px;height:42px;border-radius:50%;background:var(--hs-gold-pale);border:1.5px solid var(--hs-gold-light);display:flex;align-items:center;justify-content:center;flex-shrink:0;color:var(--hs-gold-dark);font-size:1rem;">
+              <i class="fa-solid fa-user-tie"></i>
+            </div>
+            <div>
+              <strong style="display:block;font-size:0.88rem;color:var(--hs-dark);margin-bottom:0.2rem;">Expert Stylist Assigned</strong>
+              <p style="font-size:0.82rem;color:var(--hs-gray);margin:0;line-height:1.6;">Our team will match you with the best stylist for your chosen service.</p>
+            </div>
+          </div>
+
+          <div class="d-flex align-items-start mb-4" style="gap:1rem;">
+            <div style="width:42px;height:42px;border-radius:50%;background:var(--hs-gold-pale);border:1.5px solid var(--hs-gold-light);display:flex;align-items:center;justify-content:center;flex-shrink:0;color:var(--hs-gold-dark);font-size:1rem;">
+              <i class="fa-solid fa-clock"></i>
+            </div>
+            <div>
+              <strong style="display:block;font-size:0.88rem;color:var(--hs-dark);margin-bottom:0.2rem;">Flexible Scheduling</strong>
+              <p style="font-size:0.82rem;color:var(--hs-gray);margin:0;line-height:1.6;">We're available Monday–Saturday. We'll confirm your exact slot promptly.</p>
+            </div>
+          </div>
+
+          <div class="d-flex align-items-start" style="gap:1rem;">
+            <div style="width:42px;height:42px;border-radius:50%;background:var(--hs-gold-pale);border:1.5px solid var(--hs-gold-light);display:flex;align-items:center;justify-content:center;flex-shrink:0;color:var(--hs-gold-dark);font-size:1rem;">
+              <i class="fa-brands fa-whatsapp"></i>
+            </div>
+            <div>
+              <strong style="display:block;font-size:0.88rem;color:var(--hs-dark);margin-bottom:0.2rem;">WhatsApp Reminders</strong>
+              <p style="font-size:0.82rem;color:var(--hs-gray);margin:0;line-height:1.6;">We'll send a reminder before your appointment so you never miss a visit.</p>
+            </div>
+          </div>
+
+          <hr style="border-color:var(--hs-light-gray);margin:2rem 0;">
+
+          <p style="font-size:0.8rem;color:var(--hs-gray);margin:0;">
+            Prefer to chat? <a href="/contact.html" style="color:var(--hs-gold);font-weight:600;">Send us a message</a> or WhatsApp us directly.
+          </p>
+        </div>
+      </div>
+
+      <!-- Right: Booking Form -->
+      <div class="col-lg-7">
+        <div style="background:var(--hs-white);border-radius:var(--hs-radius-lg);padding:2.5rem;box-shadow:var(--hs-shadow-sm);border:1px solid var(--hs-light-gray);">
+          <h3 style="font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:700;color:var(--hs-dark);margin-bottom:1.75rem;padding-bottom:0.75rem;border-bottom:2px solid var(--hs-gold-light);">
+            Your Details
+          </h3>
+
+          {% include 'site/partials/flash_message.html' %}
+
+          <form action="{% url 'book_appointment' %}" class="contact-form" method="post">
+            {% csrf_token %}
+
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group mb-3">
+                  <label style="font-size:0.78rem;font-weight:600;color:var(--hs-charcoal);letter-spacing:0.05em;margin-bottom:0.4rem;display:block;">Full Name *</label>
+                  <input name="full_name" required type="text" class="form-control" placeholder="e.g. Lerato Dlamini">
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group mb-3">
+                  <label style="font-size:0.78rem;font-weight:600;color:var(--hs-charcoal);letter-spacing:0.05em;margin-bottom:0.4rem;display:block;">Email Address *</label>
+                  <input type="email" name="email" required class="form-control" placeholder="you@example.com">
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group mb-3">
+              <label style="font-size:0.78rem;font-weight:600;color:var(--hs-charcoal);letter-spacing:0.05em;margin-bottom:0.4rem;display:block;">Phone Number * <span style="font-weight:400;color:var(--hs-gray);">(include country code, e.g. +27 64 875 0017)</span></label>
+              <input name="phone" id="phone" required type="tel" class="form-control"
+                     placeholder="+27 64 875 0017"
+                     pattern="^\+\d{1,3}\s?\d{4,14}$"
+                     title="Phone number must start with country code, e.g. +27 64 875 0017">
+            </div>
+
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group mb-3">
+                  <label style="font-size:0.78rem;font-weight:600;color:var(--hs-charcoal);letter-spacing:0.05em;margin-bottom:0.4rem;display:block;">Preferred Date *</label>
+                  <input type="date" name="appointment_date" required class="form-control">
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group mb-3">
+                  <label style="font-size:0.78rem;font-weight:600;color:var(--hs-charcoal);letter-spacing:0.05em;margin-bottom:0.4rem;display:block;">Preferred Time *</label>
+                  <input type="time" name="appointment_time" required class="form-control">
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group mb-3">
+              <label style="font-size:0.78rem;font-weight:600;color:var(--hs-charcoal);letter-spacing:0.05em;margin-bottom:0.4rem;display:block;">Service *</label>
+              <select name="service" required class="form-control">
+                <option value="">— Select a service —</option>
+                {% for service in services %}
+                  <option value="{{ service.name|lower }}">{{ service.name }}</option>
+                {% endfor %}
+              </select>
+            </div>
+
+            <div class="form-group mb-3">
+              <label style="font-size:0.78rem;font-weight:600;color:var(--hs-charcoal);letter-spacing:0.05em;margin-bottom:0.4rem;display:block;">Special Requests or Notes</label>
+              <textarea name="notes" cols="30" rows="4" class="form-control" placeholder="Any allergies, preferences, or things we should know…"></textarea>
+            </div>
+
+            <div class="form-group mb-4">
+              <label style="display:flex;align-items:flex-start;gap:0.6rem;font-size:0.82rem;color:var(--hs-charcoal);cursor:pointer;">
+                <input type="checkbox" name="agree_terms" required style="margin-top:3px;flex-shrink:0;accent-color:var(--hs-gold);">
+                I agree to receive booking confirmations and reminders via WhatsApp.
+              </label>
+            </div>
+
+            {% include 'site/partials/form_antispam.html' with honeypot_id='appointment_hp' turnstile_widget_id='turnstile-appointment' %}
+
+            <div class="form-group">
+              <button type="submit" class="btn-hs-primary" style="border:none;cursor:pointer;width:100%;justify-content:center;font-size:0.82rem;padding:1rem 2rem;">
+                <i class="fa-solid fa-calendar-check"></i> Confirm Booking
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+{% endblock %}
+
+{% block extra_scripts %}
+{% if turnstile_enabled %}
+<script>
+  (function () {
+    var siteKey = "{{ turnstile_site_key|escapejs }}";
+    window.initHairitageTurnstile = function () {
+      if (!window.turnstile) return;
+      var el = document.getElementById("turnstile-appointment");
+      if (el) turnstile.render(el, { sitekey: siteKey });
+    };
+  })();
+</script>
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit&onload=initHairitageTurnstile" async defer></script>
+{% endif %}
+{% endblock %}

@@ -17,123 +17,190 @@
     </title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    
-    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,600,700" rel="stylesheet">
+
+    <!-- Professional Fonts: Playfair Display (headings) + Montserrat (body) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="/static/site/assets/css/open-iconic-bootstrap.min.css">
     <link rel="stylesheet" href="/static/site/assets/css/animate.css">
-    
+
     <link rel="stylesheet" href="/static/site/assets/css/owl.carousel.min.css">
     <link rel="stylesheet" href="/static/site/assets/css/owl.theme.default.min.css">
     <link rel="stylesheet" href="/static/site/assets/css/magnific-popup.css">
 
     <link rel="stylesheet" href="/static/site/assets/css/aos.css">
-
     <link rel="stylesheet" href="/static/site/assets/css/ionicons.min.css">
-
     <link rel="stylesheet" href="/static/site/assets/css/bootstrap-datepicker.css">
     <link rel="stylesheet" href="/static/site/assets/css/jquery.timepicker.css">
-
-    
     <link rel="stylesheet" href="/static/site/assets/css/flaticon.css">
     <link rel="stylesheet" href="/static/site/assets/css/icomoon.css">
     <link rel="stylesheet" href="/static/site/assets/css/style.css">
-          <!-- favicons -->
-    <link rel="shortcut icon" href="/static/images/logo_small.png" type="image/png">
-    <link rel="icon" href="/static/images/logo_small.png" sizes="32x32" type="image/png">
+
+    <!-- Font Awesome 6 (modern icons) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous">
+    <!-- Professional enhancements (loaded last to override) -->
+    <link rel="stylesheet" href="/static/site/assets/css/enhancements.css">
+
+    <!-- Favicons -->
+    <link rel="shortcut icon" href="/static/images/logo.png" type="image/png">
+    <link rel="icon" href="/static/images/logo.png" sizes="64x64" type="image/png">
+    <link rel="apple-touch-icon" href="/static/images/logo.png">
   </head>
+  <body>
 
+    <!-- ===== NAVBAR ===== -->
     <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
+      <div class="container">
+        <a class="navbar-brand d-flex align-items-center" href="/">
+          <img src="/static/images/logo.png" alt="Hairitage Studio Logo" style="height:64px;width:auto;margin-right:0.5rem;">
+          Hairitage Studio
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="oi oi-menu"></span>
+        </button>
 
-        <div class="container">
-			<img src="/static/images/logo.png" alt="Logo"  style="width:60px">
-	      <a class="navbar-brand" href="/">Hairitage Studio</a>
-	      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
-	        <span class="oi oi-menu"></span> Menu
-	      </button>
-
-	      <div class="collapse navbar-collapse" id="ftco-nav">
-	        <ul class="navbar-nav ml-auto">
-	          <li class="nav-item  {% if request.path == "/" %}active {% endif %}"><a href="/" class="nav-link">Home</a></li>
-	          <li class="nav-item  {% if 'about' in request.path %}active{% endif %}"><a href="/about.html" class="nav-link">About</a></li>
-	          <li class="nav-item  {% if 'services' in request.path %}active {% endif %}"><a href="/services.html" class="nav-link">Services</a></li>
-	          <li class="nav-item  {% if 'work' in request.path %}active{% endif %}"><a href="/work.html" class="nav-link">Work</a></li>
-	          <li class="nav-item  {% if 'blog' in request.path %}active{% endif %}"><a href="/blog.html" class="nav-link">Blog</a></li>
-	          <li class="nav-item  {% if 'contact' in request.path %}active{% endif %}"><a href="/contact.html" class="nav-link">Contact</a></li>
-	        </ul>
-	      </div>
-	    </div>
-	  </nav>
+        <div class="collapse navbar-collapse" id="ftco-nav">
+          <ul class="navbar-nav ml-auto align-items-lg-center">
+            <li class="nav-item {% if request.path == "/" %}active{% endif %}"><a href="/" class="nav-link">Home</a></li>
+            <li class="nav-item {% if 'about' in request.path %}active{% endif %}"><a href="/about.html" class="nav-link">About</a></li>
+            <li class="nav-item {% if 'services' in request.path %}active{% endif %}"><a href="/services.html" class="nav-link">Services</a></li>
+            <li class="nav-item {% if 'work' in request.path %}active{% endif %}"><a href="/work.html" class="nav-link">Work</a></li>
+            <li class="nav-item {% if 'blog' in request.path %}active{% endif %}"><a href="/blog.html" class="nav-link">Blog</a></li>
+            <li class="nav-item {% if request.path == '/contact.html' %}active{% endif %}"><a href="/contact.html" class="nav-link">Contact</a></li>
+            <li class="nav-item ml-lg-2">
+              <a href="/book.html" class="nav-link nav-btn-book">Book Now</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
     <!-- END nav -->
 
     {% block content %}
     {% endblock content %}
 
+    <!-- ===== FOOTER ===== -->
     <footer class="ftco-footer ftco-section img">
-    	<div class="overlay"></div>
+      <div class="overlay"></div>
       <div class="container">
         <div class="row mb-5">
+
+          <!-- About column -->
           <div class="col-md-3">
             <div class="ftco-footer-widget mb-4">
+              <a href="/" class="d-flex align-items-center mb-3" style="text-decoration:none;">
+                <img src="/static/images/logo.png" alt="Hairitage Studio" style="height:64px;width:auto;margin-right:0.6rem;opacity:0.9;">
+                <span style="font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;color:#C9A96E;">Hairitage Studio</span>
+              </a>
               <h2 class="ftco-heading-2">About Us</h2>
               <p>{% about_intro %}</p>
-				{% socials %}
+              {% socials %}
             </div>
           </div>
+
+          <!-- Recent Blog column -->
           <div class="col-md-5">
-             <div class="ftco-footer-widget mb-4">
-                 <h2 class="ftco-heading-2">Recent Blog</h2>
-                {% recent_blogs %}
-             </div>
-
-
+            <div class="ftco-footer-widget mb-4">
+              <h2 class="ftco-heading-2">Recent Blog</h2>
+              {% recent_blogs %}
+            </div>
           </div>
 
+          <!-- Contact column -->
           <div class="col-md-4">
             <div class="ftco-footer-widget mb-4">
-            	<h2 class="ftco-heading-2">Have a Questions?</h2>
-            	<div class="block-23 mb-3">
-	              <ul>
-	                <li><span class="icon icon-map-marker"></span><span class="text">{% physical_address %}</span></li>
-	                <li><a href="https://wa.me/27843939484"><span class="icon icon-phone"></span><span class="text">{% contact_number %}</span></a></li>
-	                <li><a href="mailto:info@hairitage-studio.co.za"><span class="icon icon-envelope"></span><span class="text">{% email_address %}</span></a></li>
-	              </ul>
-	            </div>
+              <h2 class="ftco-heading-2">Get In Touch</h2>
+              <div class="block-23 mb-3">
+                <ul class="list-unstyled">
+                  <li>
+                    <span class="icon icon-map-marker" style="color:#C9A96E;margin-right:0.5rem;"></span>
+                    <span class="text">{% physical_address %}</span>
+                  </li>
+                  <li>
+                    <a href="https://wa.me/27843939484" style="display:flex;align-items:center;gap:0.5rem;">
+                      <span class="icon icon-phone" style="color:#C9A96E;"></span>
+                      <span class="text">{% contact_number %}</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="mailto:info@hairitage-studio.co.za" style="display:flex;align-items:center;gap:0.5rem;">
+                      <span class="icon icon-envelope" style="color:#C9A96E;"></span>
+                      <span class="text">{% email_address %}</span>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+              <a href="/book.html" class="btn-hs-primary" style="font-size:0.75rem;padding:0.65rem 1.5rem;">
+                Book Appointment
+              </a>
             </div>
           </div>
+
         </div>
+
+        <!-- Bottom bar -->
         <div class="row">
           <div class="col-md-12 text-center">
-            <p>Copyright &copy;2023 Hairitage studio All rights reserved</p>
+            <p style="margin:0;font-size:0.82rem;color:rgba(255,255,255,0.4);">
+              &copy; {% now "Y" %} Hairitage Studio &mdash; All rights reserved &nbsp;|&nbsp;
+              <a href="/legal/privacy-policy.html" style="color:rgba(255,255,255,0.4);">Privacy Policy</a> &nbsp;|&nbsp;
+              <a href="/legal/terms-of-service.html" style="color:rgba(255,255,255,0.4);">Terms of Service</a>
+            </p>
           </div>
         </div>
+
       </div>
     </footer>
-    
-  
 
-  <!-- loader -->
-  <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"/></svg></div>
+    <!-- ===== FLOATING WHATSAPP BUTTON ===== -->
+    <a href="https://wa.me/27843939484" target="_blank" rel="noopener" class="hs-whatsapp-float" title="Chat with us on WhatsApp">
+      <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+      </svg>
+      <span class="wa-label">Chat with us</span>
+    </a>
 
+    <!-- Page loader -->
+    <div id="ftco-loader" class="show fullscreen">
+      <svg class="circular" width="48px" height="48px">
+        <circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/>
+        <circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#C9A96E"/>
+      </svg>
+    </div>
 
-  <script src="/static/site/assets/js/jquery.min.js"></script>
-  <script src="/static/site/assets/js/jquery-migrate-3.0.1.min.js"></script>
-  <script src="/static/site/assets/js/popper.min.js"></script>
-  <script src="/static/site/assets/js/bootstrap.min.js"></script>
-  <script src="/static/site/assets/js/jquery.easing.1.3.js"></script>
-  <script src="/static/site/assets/js/jquery.waypoints.min.js"></script>
-  <script src="/static/site/assets/js/jquery.stellar.min.js"></script>
-  <script src="/static/site/assets/js/owl.carousel.min.js"></script>
-  <script src="/static/site/assets/js/jquery.magnific-popup.min.js"></script>
-  <script src="/static/site/assets/js/aos.js"></script>
-  <script src="/static/site/assets/js/jquery.animateNumber.min.js"></script>
-  <script src="/static/site/assets/js/bootstrap-datepicker.js"></script>
-  <script src="/static/site/assets/js/jquery.timepicker.min.js"></script>
-  <script src="/static/site/assets/js/scrollax.min.js"></script>
-  {% block extra_scripts %}{% endblock %}
+    <script src="/static/site/assets/js/jquery.min.js"></script>
+    <script src="/static/site/assets/js/jquery-migrate-3.0.1.min.js"></script>
+    <script src="/static/site/assets/js/popper.min.js"></script>
+    <script src="/static/site/assets/js/bootstrap.min.js"></script>
+    <script src="/static/site/assets/js/jquery.easing.1.3.js"></script>
+    <script src="/static/site/assets/js/jquery.waypoints.min.js"></script>
+    <script src="/static/site/assets/js/jquery.stellar.min.js"></script>
+    <script src="/static/site/assets/js/owl.carousel.min.js"></script>
+    <script src="/static/site/assets/js/jquery.magnific-popup.min.js"></script>
+    <script src="/static/site/assets/js/aos.js"></script>
+    <script src="/static/site/assets/js/jquery.animateNumber.min.js"></script>
+    <script src="/static/site/assets/js/bootstrap-datepicker.js"></script>
+    <script src="/static/site/assets/js/jquery.timepicker.min.js"></script>
+    <script src="/static/site/assets/js/scrollax.min.js"></script>
+    {% block extra_scripts %}{% endblock %}
+    <script src="/static/site/assets/js/main.js"></script>
 
-  <script src="/static/site/assets/js/main.js"></script>
-    
+    <!-- Navbar scroll effect -->
+    <script>
+      (function() {
+        var nav = document.getElementById('ftco-navbar');
+        if (!nav) return;
+        window.addEventListener('scroll', function() {
+          if (window.scrollY > 60) {
+            nav.classList.add('scrolled');
+          } else {
+            nav.classList.remove('scrolled');
+          }
+        }, { passive: true });
+      })();
+    </script>
+
   </body>
 </html>
-    
