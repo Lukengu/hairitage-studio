@@ -45,6 +45,9 @@ h1,h2,h3,h4,h5,h6 {
   font-family: var(--font-heading) !important;
   color: var(--hs-dark) !important;
 }
+h1.contact-title {
+ color: var(--hs-white) !important;
+}
 
 p { line-height: 1.8; }
 
