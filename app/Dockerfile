@@ -35,7 +35,7 @@ RUN isort .
 RUN black .
 RUN autopep8 --in-place --recursive .
 
-RUN flake8 --ignore=E501,F401,E241,W292,F811 .
+RUN flake8 --ignore=E501,F401,E241,W292,F811,W504 .
 
 # Copy requirements and build wheels (long timeout for slow PyPI downloads)
 COPY ./requirements.txt .

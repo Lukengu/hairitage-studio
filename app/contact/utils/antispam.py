@@ -1,4 +1,5 @@
 import logging
+import os
 import time
 
 import requests
@@ -11,6 +12,7 @@ FORM_SIGNING_SALT = "hairitage-contact-form"
 MIN_SUBMIT_SECONDS = 3
 MAX_SUBMIT_SECONDS = 3600
 HONEYPOT_FIELD = "company_website"
+secret_key = os.environ.get("SECRET_KEY")
 
 
 class AntispamError(Exception):

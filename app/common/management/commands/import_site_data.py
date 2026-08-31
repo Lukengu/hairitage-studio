@@ -28,7 +28,9 @@ class Command(BaseCommand):
         )
 
     def handle(self, *args, **options):
-        fixture_path = Path(__file__).resolve().parents[3] / "fixtures" / options["fixture"]
+        fixture_path = (Path(__file__).resolve().parents[3]
+                        / "fixtures"
+                        / options["fixture"])
         if not fixture_path.exists():
             self.stderr.write(f"Fixture not found: {fixture_path}")
             self.stderr.write("Run: bash deploy/export-local-data.sh")
