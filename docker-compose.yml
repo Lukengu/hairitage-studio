@@ -20,6 +20,17 @@ services:
         - ./_data:/var/lib/postgresql/data/
     env_file:
       - .env.db.local
+  worker:
+    build:
+      context: ./app
+      dockerfile: Dockerfile
+    command: sh -c "while true; do python manage.py send_appointment_reminders; sleep 60; done"
+    env_file:
+      - ./.env.local
+    depends_on:
+      - db
+    restart: unless-stopped
+
   adminer:
     image: adminer
     restart: always

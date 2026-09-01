@@ -40,6 +40,8 @@ class Appointment(models.Model):
     time = models.TimeField()
     notes = models.TextField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
+    reminder_30_sent = models.BooleanField(default=False)
+    reminder_5_sent = models.BooleanField(default=False)
 
     def __str__(self):
         return f'Appointment for {self.full_name} on {self.date} at {self.time}'
