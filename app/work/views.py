@@ -24,7 +24,8 @@ def work_page(
     # Get main categories and prefetch their subcategories with item counts
     work_categories = (
         Category.objects
-        .filter(parent__isnull=True)  # only top-level categories
+        .filter(parent__isnull=True)
+        .annotate(ct=Count("works"))
         .prefetch_related(
             Prefetch(
                 "subcategories",

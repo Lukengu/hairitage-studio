@@ -29,22 +29,34 @@ Hairitage Studio — Our Work
 						<h5>Categories</h5>
 						<ul class="list-unstyled">
 							{% for category in work_categories %}
-							<li class="fw-bold py-2 border-bottom bg-light">{{ category.name }}</li>
-							{% if category.subcategories.count > 0 %}
-							<ul>
-							{% endif %}
-							{% for sub in category.subcategories.all %}
-							<li class="ps-3 py-1 {% if request.GET.cat_id|default:0 == sub.id %}bg-primary text-white rounded fw-bold{% endif %}">
-								<a href="?cat_id={{ sub.id }}" class="text-decoration-none {% if request.GET.cat_id|default:0 == sub.id %}text-white{% else %}text-dark{% endif %}">
-									&raquo; {{ sub.name }}  <span>({{ sub.ct }}) </span>
-								</a>
-							</li>
-							{% endfor %}
-						    {% if category.subcategories.count > 0 %}
-							</ul>
-							{% endif %}
+								<li class="fw-bold py-2 border-bottom bg-light {% if request.GET.cat_id|default:0 == category.id %}bg-primary text-white{% endif %}">
+									{% if category.ct > 0 %}
+									<a href="?cat_id={{ category.id }}" class="text-decoration-none {% if request.GET.cat_id|default:0 == category.id %}text-white{% else %}text-dark{% endif %}">
+										{{ category.name }} <span>({{ category.ct }})</span>
+									</a>
+									{% else %}
+										{{ category.name }}
+									{% endif %}
+								</li>
 
-							{% endfor %}
+								{% if category.subcategories.count > 0 %}
+								<ul>
+								{% endif %}
+								{% for sub in category.subcategories.all %}
+								<li class="ps-3 py-1 {% if request.GET.cat_id|default:0 == sub.id %}bg-primary text-white rounded fw-bold{% endif %}">
+									{% if sub.ct > 0 %}
+									<a href="?cat_id={{ sub.id }}" class="text-decoration-none {% if request.GET.cat_id|default:0 == sub.id %}text-white{% else %}text-dark{% endif %}">
+										&raquo; {{ sub.name }} <span>({{ sub.ct }})</span>
+									</a>
+									{% else %}
+										&raquo; {{ sub.name }}
+									{% endif %}
+								</li>
+								{% endfor %}
+								{% if category.subcategories.count > 0 %}
+								</ul>
+								{% endif %}
+								{% endfor %}
 						</ul>
 					</div>
 				</div>
