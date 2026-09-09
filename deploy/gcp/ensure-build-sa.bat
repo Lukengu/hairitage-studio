@@ -22,20 +22,20 @@ if "%ARTIFACT_REPO%"=="" (set "ARTIFACT_REPO_NAME=cloud-run-source-deploy") else
 
 set "BUILD_SA_EMAIL=%BUILD_SA_NAME%@%GCP_PROJECT%.iam.gserviceaccount.com"
 
-for /f "usebackq delims=" %%P in (`gcloud projects describe "%GCP_PROJECT%" --format="value(projectNumber)"`) do (
+for /f "usebackq delims=" %%P in (`call gcloud projects describe "%GCP_PROJECT%" --format="value(projectNumber)"`) do (
   set "PROJECT_NUMBER=%%P"
 )
 set "CLOUDBUILD_SA=serviceAccount:!PROJECT_NUMBER!@cloudbuild.gserviceaccount.com"
 
-gcloud iam service-accounts describe "%BUILD_SA_EMAIL%" >nul 2>&1
+call gcloud iam service-accounts describe "%BUILD_SA_EMAIL%" >nul 2>&1
 if errorlevel 1 (
   echo ==^> Creating build service account %BUILD_SA_EMAIL%
-  gcloud iam service-accounts create "%BUILD_SA_NAME%" ^
+  call gcloud iam service-accounts create "%BUILD_SA_NAME%" ^
     --display-name="Hairitage Cloud Build"
 )
 
 for /l %%I in (1,1,30) do (
-  gcloud iam service-accounts describe "%BUILD_SA_EMAIL%" >nul 2>&1
+  call gcloud iam service-accounts describe "%BUILD_SA_EMAIL%" >nul 2>&1
   if not errorlevel 1 goto :sa_ready
   timeout /t 2 /nobreak >nul
 )
@@ -45,7 +45,7 @@ for %%R in (roles/storage.admin roles/artifactregistry.writer roles/logging.logW
   set "ROLE_BOUND="
   for /l %%I in (1,1,5) do (
     if not defined ROLE_BOUND (
-      gcloud projects add-iam-policy-binding "%GCP_PROJECT%" ^
+      call gcloud projects add-iam-policy-binding "%GCP_PROJECT%" ^
         --member="serviceAccount:%BUILD_SA_EMAIL%" ^
         --role="%%R" ^
         --quiet >nul 2>&1
@@ -58,15 +58,15 @@ for %%R in (roles/storage.admin roles/artifactregistry.writer roles/logging.logW
   )
 )
 
-gcloud artifacts repositories describe "%ARTIFACT_REPO_NAME%" --location="%GCP_REGION%" >nul 2>&1
+call gcloud artifacts repositories describe "%ARTIFACT_REPO_NAME%" --location="%GCP_REGION%" >nul 2>&1
 if errorlevel 1 (
-  gcloud artifacts repositories create "%ARTIFACT_REPO_NAME%" ^
+  call gcloud artifacts repositories create "%ARTIFACT_REPO_NAME%" ^
     --repository-format=docker ^
     --location="%GCP_REGION%"
 )
 
 for /l %%I in (1,1,5) do (
-  gcloud artifacts repositories add-iam-policy-binding "%ARTIFACT_REPO_NAME%" ^
+  call gcloud artifacts repositories add-iam-policy-binding "%ARTIFACT_REPO_NAME%" ^
     --location="%GCP_REGION%" ^
     --member="serviceAccount:%BUILD_SA_EMAIL%" ^
     --role="roles/artifactregistry.writer" ^
@@ -76,7 +76,7 @@ for /l %%I in (1,1,5) do (
 )
 :repo_binding_done
 
-gcloud iam service-accounts add-iam-policy-binding "%BUILD_SA_EMAIL%" ^
+call gcloud iam service-accounts add-iam-policy-binding "%BUILD_SA_EMAIL%" ^
   --member="!CLOUDBUILD_SA!" ^
   --role="roles/iam.serviceAccountUser" ^
   --quiet >nul 2>&1

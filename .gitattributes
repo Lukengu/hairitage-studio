@@ -1,0 +1,9 @@
+# Force LF endings for scripts with shebang lines, regardless of core.autocrlf.
+# Docker's exec form ENTRYPOINT (and any `#!/bin/sh` script) fails with
+# "no such file or directory" if the shebang line ends in CRLF, because the
+# kernel tries to resolve the interpreter path literally, CR included.
+*.sh text eol=lf
+
+# Windows batch files should stay CRLF (their native format).
+*.bat text eol=crlf
+*.cmd text eol=crlf
