@@ -78,6 +78,7 @@ celerybeat-schedule.*
 .env.production
 .env.db.production
 deploy/gcp/config.sh
+deploy/gcp/config.bat
 .venv
 env/
 venv/
