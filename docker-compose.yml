@@ -9,7 +9,7 @@ services:
     ports:
       - "8000:8000"
     env_file:
-      - ./.env.local
+      - .env.db.local
     depends_on:
       - db
     expose:
@@ -26,7 +26,7 @@ services:
       dockerfile: Dockerfile
     command: sh -c "while true; do python manage.py send_appointment_reminders; sleep 60; done"
     env_file:
-      - ./.env.local
+      - .env.db.local
     depends_on:
       - db
     restart: unless-stopped
