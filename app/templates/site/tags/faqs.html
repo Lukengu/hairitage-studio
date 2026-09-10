@@ -1,0 +1,32 @@
+{% if faqs %}
+<section class="hs-faq-section">
+  <div class="container">
+    <div class="row justify-content-center mb-5">
+      <div class="col-md-8 heading-section text-center">
+        <span class="hs-section-label">Good to Know</span>
+        <h2 class="mb-3">Frequently Asked Questions</h2>
+        <p style="color:var(--hs-gray);font-size:0.92rem;">Everything you need to know before your visit.</p>
+      </div>
+    </div>
+    <div class="row justify-content-center">
+      <div class="col-lg-9">
+        <div class="hs-faq-list" id="hsFaqAccordion">
+          {% for faq in faqs %}
+          <div class="hs-faq-item">
+            <button class="hs-faq-question" type="button" data-toggle="collapse"
+                    data-target="#hsFaq{{ forloop.counter }}" aria-expanded="false"
+                    aria-controls="hsFaq{{ forloop.counter }}">
+              {{ faq.question }}
+              <i class="fa-solid fa-chevron-down hs-faq-icon"></i>
+            </button>
+            <div id="hsFaq{{ forloop.counter }}" class="collapse" data-parent="#hsFaqAccordion">
+              <div class="hs-faq-answer">{{ faq.answer }}</div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endif %}

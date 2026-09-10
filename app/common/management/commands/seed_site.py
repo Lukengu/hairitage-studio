@@ -8,6 +8,7 @@ from PIL import Image
 
 import blog.models
 import configuration.models
+import pricing.models
 import product.models
 import work.models
 
@@ -43,7 +44,9 @@ class Command(BaseCommand):
         with transaction.atomic():
             self._seed_settings()
             self._seed_stats()
+            self._seed_faqs()
             self._seed_services()
+            self._seed_pricing()
             self._seed_team()
             self._seed_work()
             user = self._ensure_author()
@@ -89,6 +92,48 @@ class Command(BaseCommand):
         for name, count in stats:
             configuration.models.Stats.objects.get_or_create(name=name, defaults={"count": count})
 
+    def _seed_faqs(self):
+        faqs = [
+            (
+                "Do I need to book in advance, or can I walk in?",
+                "We recommend booking ahead to guarantee your preferred time and stylist, but walk-ins are "
+                "welcome subject to availability.",
+            ),
+            (
+                "How do I book an appointment?",
+                "Use our online booking form, or message us on WhatsApp. You'll get an instant confirmation "
+                "and a reminder before your visit.",
+            ),
+            (
+                "What if I need to cancel or reschedule?",
+                "Please give us at least 24 hours' notice so we can offer your slot to another client.",
+            ),
+            (
+                "Are the prices on your price list final?",
+                "Our price list gives accurate starting prices. Longer, thicker, or heavily processed hair "
+                "may cost a little more — we'll always confirm before we begin.",
+            ),
+            (
+                "What products do you use?",
+                "Only professional, salon-grade products, chosen for quality and hair safety.",
+            ),
+            (
+                "Do you cater for all hair types and textures?",
+                "Yes — our stylists are trained across natural, protective, colour-treated, and chemically "
+                "relaxed hair.",
+            ),
+            (
+                "Can I bring reference photos?",
+                "Absolutely — we'll do a quick consultation first to make sure we're aligned before starting.",
+            ),
+            (
+                "Where are you located, and is there parking?",
+                "Johannesburg, Gauteng — see the map on our Contact page for directions and parking.",
+            ),
+        ]
+        for index, (question, answer) in enumerate(faqs):
+            configuration.models.FAQ.objects.get_or_create(question=question, defaults={"answer": answer, "order": index})
+
     def _seed_services(self):
         services = [
             (
@@ -117,6 +162,62 @@ class Command(BaseCommand):
                 name=name,
                 defaults={"icon": icon, "description": description},
             )
+
+    def _seed_pricing(self):
+        catalogue = [
+            (
+                "Haircuts & Styling",
+                "Precision cuts and finishing for every hair type.",
+                [
+                    ("Women's Cut & Style", "Wash, cut, and blow-dry finish.", 250, None, 60, False),
+                    ("Men's Cut", "Classic or modern cut with finish.", 150, None, 30, False),
+                    ("Blow-Dry & Style", "Wash and style, no cut.", 180, None, 45, True),
+                ],
+            ),
+            (
+                "Colour",
+                "Professional colour using salon-grade products.",
+                [
+                    ("Full Colour", "Single-process colour, root to tip.", 450, 650, 90, True),
+                    ("Balayage / Highlights", "Hand-painted or foiled highlights.", 650, 950, 150, True),
+                    ("Root Touch-Up", "Colour refresh for regrowth.", 350, None, 60, False),
+                ],
+            ),
+            (
+                "Treatments",
+                "Restorative care for healthy, resilient hair.",
+                [
+                    ("Deep Conditioning Treatment", "Intensive moisture and repair.", 200, None, 30, False),
+                    ("Scalp Treatment", "Soothing scalp care and cleanse.", 220, None, 40, False),
+                ],
+            ),
+            (
+                "Bridal & Events",
+                "Special-occasion styling for your big day.",
+                [
+                    ("Bridal Trial", "Consultation and full style trial.", 500, None, 90, False),
+                    ("Bridal Day Styling", "On-the-day styling, includes touch-ups.", 900, 1500, 120, True),
+                ],
+            ),
+        ]
+        for cat_index, (name, description, items) in enumerate(catalogue):
+            category, _ = pricing.models.PriceCategory.objects.get_or_create(
+                name=name,
+                defaults={"description": description, "order": cat_index},
+            )
+            for item_index, (item_name, item_desc, price_from, price_to, duration, popular) in enumerate(items):
+                pricing.models.PriceItem.objects.get_or_create(
+                    category=category,
+                    name=item_name,
+                    defaults={
+                        "description": item_desc,
+                        "price_from": price_from,
+                        "price_to": price_to,
+                        "duration_minutes": duration,
+                        "is_popular": popular,
+                        "order": item_index,
+                    },
+                )
 
     def _seed_team(self):
         members = [

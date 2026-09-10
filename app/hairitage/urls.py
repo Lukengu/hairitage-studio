@@ -21,6 +21,7 @@ from .views import home_page, serve_media
 from django.contrib.staticfiles.urls import static, staticfiles_urlpatterns
 from blog import views as blog_views
 from contact import views as contact_views
+from pricing import views as pricing_views
 from product import views as product_views
 from work import views as work_views
 
@@ -32,6 +33,7 @@ urlpatterns = [
     path('blog.html', blog_views.blog_page, name="blog"),
     path('blog/', include('blog.urls')),
     path('services.html', product_views.service_page, name="services"),
+    path('pricing.html', pricing_views.pricing_page, name="pricing"),
     path('contact.html', contact_views.contact_page, name="contact"),
     path('book.html', contact_views.booking_page, name="booking"),
     path('work.html', work_views.work_page, name="work"),

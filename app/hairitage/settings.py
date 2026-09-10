@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'django_seed',
     'work',
     'product',
+    'pricing',
     'blog',
     'configuration',
     'common',

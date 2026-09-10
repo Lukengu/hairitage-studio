@@ -4,6 +4,7 @@
 {% load teams %}
 {% load services %}
 {% load stats %}
+{% load faqs %}
 
 {% block content %}
 
@@ -15,9 +16,9 @@
     <div class="row align-items-center">
       <div class="col-lg-7 hero-content">
 
-        <span class="hero-eyebrow">Premium Hair Salon &amp; Styling</span>
+        <span class="hero-eyebrow">Where Natural Hair Meets Luxury</span>
 
-        <h1>Where Beauty<br>Meets <em>Artistry</em></h1>
+        <h1>Beautiful Hair,<br><em>Your Way</em></h1>
 
         <div class="hero-rating">
           <span class="hero-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
@@ -25,7 +26,7 @@
         </div>
 
         <p class="hero-subtitle">
-          Experience the art of hair transformation at Hairitage Studio. Our expert stylists craft bespoke looks tailored to celebrate your unique beauty.
+          Hairitage Studio is Johannesburg's home for expert natural hair care, colour, and styling — crafted by stylists who understand every texture.
         </p>
 
         <div class="d-flex flex-wrap align-items-center">
@@ -129,8 +130,8 @@
         <p style="color:var(--hs-gray);font-size:0.92rem;">Real experiences from real clients — we let our work speak for itself.</p>
       </div>
     </div>
-    <div class="row">
-      <div class="col-md-4 mb-4">
+    <div class="owl-carousel hs-testi-carousel owl-theme">
+      <div class="item">
         <div class="hs-testi-card">
           <div class="hs-testi-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
           <p>"Absolutely phenomenal experience from start to finish. My hair has never looked or felt this amazing. The team truly listened to what I wanted."</p>
@@ -143,7 +144,7 @@
           </div>
         </div>
       </div>
-      <div class="col-md-4 mb-4">
+      <div class="item">
         <div class="hs-testi-card">
           <div class="hs-testi-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
           <p>"I came in for a colour correction and left looking like a completely new person. Professional, talented, and so warm. I won't go anywhere else!"</p>
@@ -156,7 +157,7 @@
           </div>
         </div>
       </div>
-      <div class="col-md-4 mb-4">
+      <div class="item">
         <div class="hs-testi-card">
           <div class="hs-testi-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
           <p>"Had my bridal hair done here and it was beyond perfect. Every guest complimented my look. Hairitage Studio made my special day even more beautiful."</p>
@@ -212,6 +213,9 @@
   </div>
 </section>
 
+<!-- ===== FAQ ===== -->
+{% faqs %}
+
 <!-- ===== STATS ===== -->
 {% stats %}
 
@@ -221,3 +225,26 @@
 {% endif %}
 
 {% endblock content %}
+
+{% block extra_scripts %}
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    if (window.jQuery && jQuery.fn.owlCarousel) {
+      jQuery('.hs-testi-carousel').owlCarousel({
+        loop: true,
+        margin: 24,
+        nav: false,
+        dots: true,
+        autoplay: true,
+        autoplayTimeout: 6000,
+        autoplayHoverPause: true,
+        responsive: {
+          0: { items: 1 },
+          768: { items: 2 },
+          992: { items: 3 }
+        }
+      });
+    }
+  });
+</script>
+{% endblock %}

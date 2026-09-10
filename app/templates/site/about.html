@@ -1,23 +1,37 @@
 {% extends 'site/layout.html' %}
- {% load teams %}
+{% load teams %}
 {% block site-title %}
     Hairitage Studio - About Us
 {% endblock site-title %}
 {% block content %}
-        <section class="ftco-section">
-    	<div class="container">
-    		<div class="row d-flex">
-    			<div class="col-md-6 d-flex ftco-animate">
-    				<div class="img img-about align-self-stretch" style="background-image: url(media/{{ content.image }}); width: 100%;"></div>
-    			</div>
-    			<div class="col-md-6 pl-md-5 ftco-animate  heading-section">
-    				<h2 class="mb-4">{{ content.title }}</h2>
-                    {% autoescape off  %}
-    			    {{ content.content }}
-                    {% endautoescape %}
-    			</div>
-    		</div>
-    	</div>
-    </section>
-    {% teams %}
+
+<!-- Page Header -->
+<section style="background:var(--hs-dark);padding:5rem 0 3.5rem;position:relative;overflow:hidden;">
+  <div style="position:absolute;inset:0;background:url('/static/site/assets/images/bg_12.jpg') center/cover no-repeat;opacity:0.08;"></div>
+  <div style="position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,transparent,var(--hs-gold),transparent);"></div>
+  <div class="container text-center" style="position:relative;z-index:1;">
+    <span class="hs-section-label" style="justify-content:center;">Our Story</span>
+    <h1 class="contact-title" style="font-size:clamp(2rem,4vw,3rem);font-weight:700;margin-bottom:0;">
+      {{ content.title|default:"About Hairitage Studio" }}
+    </h1>
+  </div>
+</section>
+
+<section class="ftco-section">
+	<div class="container">
+		<div class="row d-flex align-items-center">
+			<div class="col-md-6 d-flex ftco-animate mb-4 mb-md-0">
+				{% if content.image %}
+				<div class="img img-about align-self-stretch" style="background-image: url('{{ content.image.url }}'); width: 100%;"></div>
+				{% endif %}
+			</div>
+			<div class="col-md-6 pl-md-5 ftco-animate">
+			    {% autoescape off  %}
+			    {{ content.content }}
+                {% endautoescape %}
+			</div>
+		</div>
+	</div>
+</section>
+{% teams %}
 {% endblock %}

@@ -75,7 +75,7 @@ JAZZMIN_SETTINGS = {
     "hide_models": ["blog.Comment"],
 
     # List of apps (and/or models) to base side menu ordering off of (does not need to contain all apps/models)
-    "order_with_respect_to": ["auth", "product", "work", "blog"],
+    "order_with_respect_to": ["auth", "product", "work", "pricing", "blog"],
 
     # Custom links to append to app groups, keyed on app name
     "custom_links": {},
@@ -91,11 +91,14 @@ JAZZMIN_SETTINGS = {
         "work.Category": "fas fa-tags",  # categories of work (e.g., Haircuts, Coloring)
         "work.Item": "fas fa-image",  # individual gallery/photo of work
         "product.Promotion": "fas fa-align-justify",
+        "pricing.PriceCategory": "fas fa-tags",
+        "pricing.PriceItem": "fas fa-tag",
         "blog.Category": "fas fa-newspaper",
         "blog.Comment": "fas fa-comments",
         "blog.Post": "fas fa-sticky-note",
         "configuration.Settings": "fas fa-cog",
         "configuration.Stats": "fas fa-chart-pie",
+        "configuration.FAQ": "fas fa-circle-question",
         "contact.Message": "fas fa-comment-alt",
         "contact.Reply": "fas fa-reply",
         "contact.Appointment": "fas fa-calendar-check",

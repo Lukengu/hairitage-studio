@@ -7,49 +7,55 @@ Hairitage Studio — Our Work
 {% endblock site-title %}
 
 {% block content %}
-<section class="ftco-section contact-section">
-	<div class="container mt-5">
-		<div class="row align-items-start">
-			<div class="col-md-12 heading-section text-center ftco-animate mb-5">
-				<h2 class="mb-4">{{post.title}}</h2>
-				{% autoescape off  %}
-				{{post.content  }}
-				{% endautoescape %}
-			</div>
-		</div>
+
+<!-- Page Header -->
+<section style="background:var(--hs-dark);padding:5rem 0 3.5rem;position:relative;overflow:hidden;">
+  <div style="position:absolute;inset:0;background:url('/static/site/assets/images/bg_11.jpg') center/cover no-repeat;opacity:0.08;"></div>
+  <div style="position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,transparent,var(--hs-gold),transparent);"></div>
+  <div class="container text-center" style="position:relative;z-index:1;">
+    <span class="hs-section-label" style="justify-content:center;">Portfolio</span>
+    <h1 class="contact-title" style="font-size:clamp(2rem,4vw,3rem);font-weight:700;margin-bottom:0.75rem;">
+      {{ post.title|default:"Our Work" }}
+    </h1>
+    {% if post.content %}
+    <div style="color:rgba(255,255,255,0.55);font-size:0.92rem;max-width:600px;margin:0 auto;">
+      {% autoescape off %}{{ post.content }}{% endautoescape %}
+    </div>
+    {% endif %}
+  </div>
+</section>
+
+<section class="ftco-section contact-section" style="background:var(--hs-off-white);">
+	<div class="container">
 		<div class="row align-items-start"> <!-- align items top -->
 			<!-- Left panel with categories -->
 			<div class="col-md-3">
-				<div class="sidebar-box ftco-animate mt-0"> <!-- remove top margin -->
-
-
-
-
-					<div class="categories">
+				<div class="hs-sidebar-box ftco-animate mt-0"> <!-- remove top margin -->
+					<div class="hs-categories">
 						<h5>Categories</h5>
-						<ul class="list-unstyled">
+						<ul class="hs-cat-list list-unstyled">
 							{% for category in work_categories %}
-								<li class="fw-bold py-2 border-bottom bg-light {% if request.GET.cat_id|default:0 == category.id %}bg-primary text-white{% endif %}">
+								<li class="hs-cat-item {% if request.GET.cat_id|default:0 == category.id %}active{% endif %}">
 									{% if category.ct > 0 %}
-									<a href="?cat_id={{ category.id }}" class="text-decoration-none {% if request.GET.cat_id|default:0 == category.id %}text-white{% else %}text-dark{% endif %}">
-										{{ category.name }} <span>({{ category.ct }})</span>
+									<a href="?cat_id={{ category.id }}">
+										{{ category.name }} <span>{{ category.ct }}</span>
 									</a>
 									{% else %}
-										{{ category.name }}
+										<span class="hs-cat-disabled">{{ category.name }}</span>
 									{% endif %}
 								</li>
 
 								{% if category.subcategories.count > 0 %}
-								<ul>
+								<ul class="hs-cat-sub-list">
 								{% endif %}
 								{% for sub in category.subcategories.all %}
-								<li class="ps-3 py-1 {% if request.GET.cat_id|default:0 == sub.id %}bg-primary text-white rounded fw-bold{% endif %}">
+								<li class="hs-cat-sub-item {% if request.GET.cat_id|default:0 == sub.id %}active{% endif %}">
 									{% if sub.ct > 0 %}
-									<a href="?cat_id={{ sub.id }}" class="text-decoration-none {% if request.GET.cat_id|default:0 == sub.id %}text-white{% else %}text-dark{% endif %}">
-										&raquo; {{ sub.name }} <span>({{ sub.ct }})</span>
+									<a href="?cat_id={{ sub.id }}">
+										{{ sub.name }} <span>{{ sub.ct }}</span>
 									</a>
 									{% else %}
-										&raquo; {{ sub.name }}
+										<span class="hs-cat-disabled">{{ sub.name }}</span>
 									{% endif %}
 								</li>
 								{% endfor %}

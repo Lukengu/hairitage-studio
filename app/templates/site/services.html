@@ -10,16 +10,24 @@
 {% endblock site-title %}
 {% block content %}
 
-	<section class="ftco-section bg-light">
-        <div class="container">
-          	<div class="col-md-12 heading-section text-center ftco-animate mb-5">
-              <h2 class="mb-4">{{post.title}}</h2>
-				{% autoescape off  %}
-				{{ post.content }}
-				 {% endautoescape %}
-            </div>
-        </div>
-    </section>
+<!-- Page Header -->
+<section style="background:var(--hs-dark);padding:5rem 0 3.5rem;position:relative;overflow:hidden;">
+  <div style="position:absolute;inset:0;background:url('/static/site/assets/images/bg_5.jpg') center/cover no-repeat;opacity:0.08;"></div>
+  <div style="position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,transparent,var(--hs-gold),transparent);"></div>
+  <div class="container text-center" style="position:relative;z-index:1;">
+    <span class="hs-section-label" style="justify-content:center;">What We Offer</span>
+    <h1 class="contact-title" style="font-size:clamp(2rem,4vw,3rem);font-weight:700;margin-bottom:0.75rem;">
+      {{ post.title|default:"Our Services" }}
+    </h1>
+    {% if post.content %}
+    <div style="color:rgba(255,255,255,0.55);font-size:0.92rem;max-width:600px;margin:0 auto;">
+      {% autoescape off  %}
+      {{ post.content }}
+      {% endautoescape %}
+    </div>
+    {% endif %}
+  </div>
+</section>
 
     {% services %}
 

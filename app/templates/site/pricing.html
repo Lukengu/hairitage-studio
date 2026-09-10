@@ -1,0 +1,86 @@
+{% extends 'site/layout.html' %}
+{% load currency_symbol %}
+
+{% block site-title %}Hairitage Studio — Price List{% endblock %}
+
+{% block content %}
+
+<!-- Page Header -->
+<section style="background:var(--hs-dark);padding:5rem 0 3.5rem;position:relative;overflow:hidden;">
+  <div style="position:absolute;inset:0;background:url('/static/site/assets/images/bg_4.jpg') center/cover no-repeat;opacity:0.08;"></div>
+  <div style="position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,transparent,var(--hs-gold),transparent);"></div>
+  <div class="container text-center" style="position:relative;z-index:1;">
+    <span class="hs-section-label" style="justify-content:center;">Transparent Pricing</span>
+    <h1 class="contact-title" style="font-size:clamp(2rem,4vw,3rem);font-weight:700;margin-bottom:0.75rem;">
+      Our Price List
+    </h1>
+    <p style="color:rgba(255,255,255,0.55);font-size:0.92rem;max-width:480px;margin:0 auto;">
+      Honest, upfront pricing for every service. Final cost may vary slightly with hair length, thickness, or condition — we'll always confirm before we start.
+    </p>
+  </div>
+</section>
+
+<!-- Price List -->
+<section class="ftco-section" style="background:var(--hs-off-white);">
+  <div class="container">
+    {% if price_categories %}
+    <div class="row">
+      {% for category in price_categories %}
+      <div class="col-lg-6 mb-4">
+        <div class="hs-price-category">
+          <h3>{{ category.name }}</h3>
+          {% if category.description %}<p class="hs-price-category-desc">{{ category.description }}</p>{% endif %}
+
+          {% for item in category.items.all %}
+          <div class="hs-price-row">
+            <div class="hs-price-info">
+              <span class="hs-price-name">
+                {{ item.name }}
+                {% if item.is_popular %}<span class="hs-price-popular">Popular</span>{% endif %}
+              </span>
+              {% if item.description %}<span class="hs-price-desc">{{ item.description }}</span>{% endif %}
+              {% if item.note %}<span class="hs-price-note">{{ item.note }}</span>{% endif %}
+            </div>
+            <div class="hs-price-leader"></div>
+            <div class="hs-price-amount">
+              {% currency_symbol %}{{ item.price_from|floatformat:0 }}{% if item.is_range %} – {% currency_symbol %}{{ item.price_to|floatformat:0 }}{% endif %}
+              {% if item.duration_minutes %}<span class="hs-price-duration">{{ item.duration_minutes }} min</span>{% endif %}
+            </div>
+          </div>
+          {% empty %}
+          <p class="hs-price-empty">Pricing for this category is coming soon — please get in touch for a quote.</p>
+          {% endfor %}
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+
+    <div class="row mt-2">
+      <div class="col text-center">
+        <p style="color:var(--hs-gray);font-size:0.85rem;margin-bottom:1.5rem;">
+          Not sure what you need? We're happy to recommend the right service for your hair.
+        </p>
+        <a href="/book.html" class="btn-hs-primary">
+          <i class="fa-solid fa-calendar-check"></i> Book Appointment
+        </a>
+      </div>
+    </div>
+    {% else %}
+    <div class="row justify-content-center">
+      <div class="col-md-7 text-center">
+        <div class="hs-price-category">
+          <h3>Price List Coming Soon</h3>
+          <p class="hs-price-category-desc" style="margin-bottom:1.5rem;">
+            We're putting the finishing touches on our price list. In the meantime, get in touch and we'll gladly give you a quote.
+          </p>
+          <a href="/contact.html" class="btn-hs-primary">
+            <i class="fa-solid fa-comment"></i> Contact Us
+          </a>
+        </div>
+      </div>
+    </div>
+    {% endif %}
+  </div>
+</section>
+
+{% endblock %}
